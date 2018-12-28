@@ -6,16 +6,16 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
 
     
     %parameters to variate
-    parameters = ["NIND", "MAXGEN", "ELITIST", "PR_CROSS", "PR_MUT"];
+    parameters = ["NIND", "MAXGEN", "ELITIST", "PROB.CROSS", "PROB.MUT"];
     ranges = containers.Map;
     
     
     %range definition for the parameters
     ranges("NIND") = 100:100:200; % 10:50:1000;
     ranges("MAXGEN") = 100:100:200;%10:10:1000;
-    ranges("ELITIST") = 0:50:100;%0:20:100;
-    ranges("PR_CROSS") = 0:50:100;%0:20:100;
-    ranges("PR_MUT") =  0:50:100;%0:20:100;
+    ranges("ELITIST") = 0:0.5:1;%0:20:100;
+    ranges("PROB.CROSS") = 0:0.5:1;%0:20:100;
+    ranges("PROB.MUT") =  0:0.5:1;%0:20:100;
     
         
     %Iterate for every parameter  (variate one parameter at a time)
@@ -56,13 +56,13 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
                 best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3);
                 dist_param(i) = best_all_gen;
              end
-        case "PR_CROSS"
+        case "PROB.CROSS"
             for i = 1:size(curr_param_vals,2)
                 PR_CROSS = curr_param_vals(i);
                 best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3);
                 dist_param(i) = best_all_gen;
              end
-        case "PR_MUT"
+        case "PROB.MUT"
             for i = 1:size(curr_param_vals,2)
                 PR_MUT = curr_param_vals(i);
                 best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3);
@@ -89,7 +89,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
     subplot(2,3,j);
     plot(curr_param_vals ,dist_param,'r-');
     xlabel(parameter);
-    ylabel('min Distance across generations');       
+    ylabel('min Dist across generations');       
 %     if (j == 2)
 %         
 %         break;
