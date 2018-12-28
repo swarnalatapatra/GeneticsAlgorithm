@@ -14,7 +14,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
     ranges("NIND") = 100:100:200; % 10:50:1000;
     ranges("MAXGEN") = 100:100:200;%10:10:1000;
     ranges("ELITIST") = 0:50:100;%0:20:100;
-    ranges("PR_CROSS") =  0:50:100;%0:20:100;
+    ranges("PR_CROSS") = 0:50:100;%0:20:100;
     ranges("PR_MUT") =  0:50:100;%0:20:100;
     
         
@@ -78,8 +78,8 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
         
     %Store variables
     
-    filename = parameter + ".mat"; 
-    save(filename, dist_param)
+    filename = "results/" + parameter + ".mat"; 
+    save(filename, 'dist_param')
 
     %Plotting
     p = axes('Parent',params_fig);    
