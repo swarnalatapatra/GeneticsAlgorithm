@@ -1,12 +1,10 @@
 %Camila and Swarna method
 
-%rel betww Nind and generations of convergence?
-
 function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, STOP_PERCENTAGE, DEF_PR_CROSS, DEF_PR_MUT, CROSSOVER, DEF_LOCALLOOP, ah1, ah2, ah3)
 
     
     %parameters to variate
-    parameters = ["NIND", "MAXGEN", "ELITIST", "PR_CROSS", "PR_MUT"];
+    parameters = ["NIND", "MAXGEN", "NVAR", "ELITIST", "PR_CROSS", "PR_MUT"];
     ranges = containers.Map;
     
     
@@ -52,21 +50,18 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
             end
         case "ELITIST"
             for i = 1:size(curr_param_vals,2)
-                ELITIST = curr_param_vals(i);
+                ELITIST = param_val;
                 best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3);
-                dist_param(i) = best_all_gen;
              end
         case "PR_CROSS"
-            for i = 1:size(curr_param_vals,2)
-                PR_CROSS = curr_param_vals(i);
+            for param_val = range_PR_CROSS
+                PR_CROSS = param_val;
                 best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3);
-                dist_param(i) = best_all_gen;
              end
         case "PR_MUT"
-            for i = 1:size(curr_param_vals,2)
-                PR_MUT = curr_param_vals(i);
+            for param_val = range_PR_MUT
+                PR_MUT = param_val;
                 best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3);
-                dist_param(i) = best_all_gen;
              end
 %         case "LOCALLOOP"
 %             for param_val = range_LOCALLOOP
@@ -76,12 +71,9 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
 
     end 
         
-    %Store variables
+    %params_fig
     
-    filename = parameter + ".mat"; 
-    save(filename, dist_param)
-
-    %Plotting
+    %fh = figure('Visible','off','Name','TSP Tool','Position',[0,0,1024,768]);
     p = axes('Parent',params_fig);    
     
 
@@ -90,10 +82,10 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
     plot(curr_param_vals ,dist_param,'r-');
     xlabel(parameter);
     ylabel('min Distance across generations');       
-%     if (j == 2)
-%         
-%         break;
-%     end
+    if (j == 2)
+        
+        break;
+    end
     
     end
     
