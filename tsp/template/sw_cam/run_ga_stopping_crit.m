@@ -61,37 +61,11 @@ function best_all_gen = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, 
                   break;
             end  
             
-            %------------------------------------------------------
-            %Stopping criterions:
-            sc = stopping_criteria;
-            
-            switch stop_crit
-               
-                case 1 %limited_cost
-          
-                    
-                case 2 %efficiency 
-                    
-                case 3 %max_improvement 
-                    STOP = sc.max_improvement(gen , best, best_all_gen);
-                
-                otherwise
-                    warning('Unexpected stopping criterion type.')
-                    STOP = false ; 
-            end
-            
-            %Decide if stopp according with selected criterion
-            if(STOP)
-                break;
-            end
-        
-            
-            %------------------------------------------------------
 
-            
-            
         	%assign fitness values to entire population - Fintess fuction
         	FitnV=ranking(ObjV);
+            Fitness = 100./(ObjV);
+            curr_gen_maxFitness=max(Fitness);
         	%select individuals for breeding
         	SelCh=select('sus', Chrom, FitnV, GGAP);% stochastic universal sampling (SUS)
         	%recombine individuals (crossover)
@@ -104,7 +78,40 @@ function best_all_gen = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, 
             
             Chrom = tsp_ImprovePopulation(NIND, NVAR, Chrom,LOCALLOOP,Dist);
         	%increment generation counter
-        	gen=gen+1;            
+            
+ %------------------------------------------------------
+            %Stopping criterions:
+            sc = stopping_criteria;
+            
+            switch stop_crit
+                case 1 %limited_cost ??to be checked
+          
+                case 2 %efficiency 
+                    if (gen == 0 )
+                        efficiency_lim = curr_gen_maxFitness/(gen+1);
+                    end
+                    STOP = sc.efficiency_limit(curr_gen_maxFitness,gen,efficiency_lim);
+                    
+                case 3 %max_improvement 
+                    STOP = sc.max_improvement(gen , best, best_all_gen);
+                    
+                case 4 %diversity in phenotype/fitness function
+                    STOP = sc.diversity_pheno(Fitness,gen);
+                
+                otherwise
+                    warning('Unexpected stopping criterion type.')
+                    STOP = false ; 
+            end
+            
+            %Decide if stopp according with selected criterion
+            if(STOP)
+                break;
+            end
+        
+            
+%------------------------------------------------------
+        	gen=gen+1;  
+                   
         end
         
 end
