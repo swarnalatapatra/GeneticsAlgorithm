@@ -40,6 +40,7 @@ function best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAG
         % evaluate initial population
         ObjV = tspfun_path(Chrom,Dist,NIND,NVAR);
         best=zeros(1,MAXGEN);
+        best_fitness = zeros(1,MAXGEN);
         % generational loop
         while gen<MAXGEN
             sObjV=sort(ObjV);
@@ -56,11 +57,29 @@ function best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAG
             visualizeTSP(x,y,adj2path(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
             best_all_gen = min(best(1:gen+1));
             
+            %Template stopping criterion
             if (sObjV(stopN)-sObjV(1) <= 1e-15)
                   break;
+<<<<<<< HEAD:tsp/template/sw_cam/run_ga_path_representation.m
             end          
         	%assign fitness values to entire population - Fintess fuction
         	FitnV=ranking(ObjV);
+=======
+            end  
+            
+        	%assign fitness values to entire population - Fintess fuction
+        	FitnV=ranking(ObjV); %normalized between 0-2 ?
+            
+            %----------------------------------------------------------------------
+            %Alternative fitness function, used as metric for stopping
+            %criterion
+            constant_fitness = 1; %created to avoid fitness increase values to be insignificant with respect to the number of generation
+            Fitness = constant_fitness./(ObjV);
+            curr_gen_maxFitness=max(Fitness);
+            best_fitness(gen+1) = curr_gen_maxFitness;
+            %--------------------------------------------------------------------
+            
+>>>>>>> 05c3bb7240c6e5d9870979988df56e96ef80a5da:tsp/template/sw_cam/run_ga_stopping_crit.asv
         	%select individuals for breeding
         	SelCh=select('sus', Chrom, FitnV, GGAP);% stochastic universal sampling (SUS)
         	%recombine individuals (crossover)
@@ -73,7 +92,45 @@ function best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAG
             
             Chrom = tsp_ImprovePopulation(NIND, NVAR, Chrom,LOCALLOOP,Dist);
         	%increment generation counter
-        	gen=gen+1;            
+
+            %------------------------------------------------------
+            %Stopping criterions:
+            sc = stopping_criteria;
+            
+            switch stop_crit
+                case 1 %limited_cost ??to be checked %TODO
+          
+                case 2 %efficiency 
+                    if (gen == 0 )
+                        efficiency_lim = 0 ; %curr_gen_maxFitness/(gen+1);                       
+                    else
+                        STOP = sc.efficiency_limit(best_fitness,gen,efficiency_lim);
+                    end
+                   
+                    
+                    
+                    
+                case 3 %max_improvement 
+                    STOP = sc.max_improvement(gen , best, best_all_gen);
+                    
+                case 4 %diversity in phenotype/fitness function
+                    STOP = sc.diversity_pheno(Fitness,gen);
+                
+                otherwise
+                    warning('Unexpected stopping criterion type.')
+                    STOP = false ; 
+            end
+            
+            %Decide if stopp according with selected criterion
+            if(STOP)
+                break;
+            end
+
+%------------------------------------------------------
+
+            %increase generation number
+        	gen=gen+1;  
+                   
         end
         
 end
