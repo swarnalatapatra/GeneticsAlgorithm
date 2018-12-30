@@ -6,24 +6,27 @@ cost_limit =50;		% Total cost should not exceed this limit
 %efficiency_limit=0.05;		% Efficiency should not go below this limit
 gen_comparision_percen = 0.3 ; % Maximal improvement of solution over last N generations (N = gen*gen_comparision_percen)
 min_improvement = 0.1 ;  % minimum percentage of improvement: 10% 
-min_diversity = 0.5 ; %minimum diversity limit below which the algorithm stops
-thr_gen = 20; %When to start checking for stopping criteria
+min_diversity = 4%0.5 ; %minimum diversity limit below which the algorithm stops
+thr_gen = 30; %When to start checking for stopping criteria
+
+efficiency_lim = 0.5 ; %efficiency stopping criteria - To be defined : Dedired min lengt? 100/(d*gen)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  end
   
 methods
 
-    function STOP = efficiency_limit(Obj, curr_gen_maxFitness, gen,efficiency_lim)
+    function STOP = efficiency_limit(Obj, curr_gen_maxFitness, gen)
         %total efficiency should not be lower than a defined limit
         %efficiency is (max fitness of curr gen/curr gen no.)
         STOP = false;
         %To test================
-        curr_gen_efficiency = curr_gen_maxFitness/(gen+1);
-        [curr_gen_efficiency curr_gen_maxFitness gen]
+        %curr_gen_efficiency = curr_gen_maxFitness/(gen+1);%(curr_gen_maxFitness+(gen+1))/(gen+1); % best_fitness(gen+1)- best_fitness(gen)/(gen+1);%
+        %print = '[curr_gen_efficiency - curr_gen_maxFitness - gen]'
+        %[curr_gen_efficiency curr_gen_maxFitness gen]
         %=======================
         if (gen > Obj.thr_gen)
             curr_gen_efficiency = curr_gen_maxFitness/(gen+1);
-            if (curr_gen_efficiency < efficiency_lim )
+            if (curr_gen_efficiency < Obj.efficiency_lim )
                 disp("Stopping criteria: Total efficiency should not be lower than a defined limit");
                 STOP = true;
             end
@@ -60,12 +63,12 @@ methods
        %Diversity is measured in terms of fitness variance.
        STOP = false;
        %To test=============
-       curr_gen_diversity = var(Fitness);
-       [curr_gen_diversity gen]
+%        curr_gen_diversity = var(Fitness);
+%        [curr_gen_diversity gen]
        %====================
        if (gen > Obj.thr_gen)
            curr_gen_diversity = var(Fitness);
-           if (curr_gen_diversity < min_diversity)
+           if (curr_gen_diversity < Obj.min_diversity)
                disp("Stopping criteria: diversity in the phenotype space is lower than limit");
                STOP = true;
            end
