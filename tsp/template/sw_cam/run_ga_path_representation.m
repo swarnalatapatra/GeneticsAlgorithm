@@ -1,4 +1,4 @@
-function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit)
+function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit)
 % usage: run_ga(x, y, 
 %               NIND, MAXGEN, NVAR, 
 %               ELITIST, STOP_PERCENTAGE, 
@@ -78,7 +78,7 @@ function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELI
         	SelCh=select('sus', Chrom, FitnV, GGAP);% stochastic universal sampling (SUS)
         	%recombine individuals (crossover)
             SelCh = recombin(CROSSOVER,SelCh,PR_CROSS);
-            SelCh=mutateTSP('inversion',SelCh,PR_MUT);
+            SelCh=mutateTSP(MUTATION,SelCh,PR_MUT);
             %evaluate offspring, call objective function  %COST function
         	ObjVSel = tspfun(SelCh,Dist);
             %reinsert offspring into population

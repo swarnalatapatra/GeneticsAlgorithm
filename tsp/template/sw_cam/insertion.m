@@ -20,7 +20,7 @@ end
 
 rndi=zeros(1,2);
 
-%select randonm values until the difference between them is grater than one
+%select random values until the difference between them is grater than one
 while (abs(rndi(1)-rndi(2))<=1)
 	rndi=rand_int(1,2,[1 size(NewChrom,2)]);
 end
