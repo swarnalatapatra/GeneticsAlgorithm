@@ -205,8 +205,10 @@ set(fh,'Visible','on');
     
     stop_crit = 3;%1 ; %Integer between 1-3
     %PR_MUT = 0 ;
-    run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3 , stop_crit);
+    %run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3 , stop_crit);
 
-    
+%-----------------------------------------------------------------------------------
+    run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit);
+
     
 end

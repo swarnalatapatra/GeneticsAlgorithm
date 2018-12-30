@@ -1,4 +1,4 @@
-function best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3)
+function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit)
 % usage: run_ga(x, y, 
 %               NIND, MAXGEN, NVAR, 
 %               ELITIST, STOP_PERCENTAGE, 
@@ -60,13 +60,8 @@ function best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAG
             %Template stopping criterion
             if (sObjV(stopN)-sObjV(1) <= 1e-15)
                   break;
-<<<<<<< HEAD:tsp/template/sw_cam/run_ga_path_representation.m
             end          
-        	%assign fitness values to entire population - Fintess fuction
-        	FitnV=ranking(ObjV);
-=======
-            end  
-            
+       
         	%assign fitness values to entire population - Fintess fuction
         	FitnV=ranking(ObjV); %normalized between 0-2 ?
             
@@ -79,7 +74,6 @@ function best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAG
             best_fitness(gen+1) = curr_gen_maxFitness;
             %--------------------------------------------------------------------
             
->>>>>>> 05c3bb7240c6e5d9870979988df56e96ef80a5da:tsp/template/sw_cam/run_ga_stopping_crit.asv
         	%select individuals for breeding
         	SelCh=select('sus', Chrom, FitnV, GGAP);% stochastic universal sampling (SUS)
         	%recombine individuals (crossover)
