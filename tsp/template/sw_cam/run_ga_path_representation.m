@@ -1,4 +1,4 @@
-function best_all_gen = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, stop_crit)
+function best_all_gen = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3)
 % usage: run_ga(x, y, 
 %               NIND, MAXGEN, NVAR, 
 %               ELITIST, STOP_PERCENTAGE, 
@@ -31,14 +31,14 @@ function best_all_gen = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, 
         % initialize population
         Chrom=zeros(NIND,NVAR);
         for row=1:NIND
-        	Chrom(row,:)=path2adj(randperm(NVAR));
-            %Chrom(row,:)=randperm(NVAR);
+        	%Chrom(row,:)=path2adj(randperm(NVAR));
+            Chrom(row,:)=randperm(NVAR);
         end
         gen=0;
         % number of individuals of equal fitness needed to stop
         stopN=ceil(STOP_PERCENTAGE*NIND);
         % evaluate initial population
-        ObjV = tspfun(Chrom,Dist);
+        ObjV = tspfun_path(Chrom,Dist,NIND,NVAR);
         best=zeros(1,MAXGEN);
         % generational loop
         while gen<MAXGEN
@@ -54,18 +54,13 @@ function best_all_gen = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, 
             end
             
             visualizeTSP(x,y,adj2path(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
-            [best_all_gen, index ] = min(best(1:gen+1));
-            best_gen = index -1 ; %stores the generation where the best solution was reached.
+            best_all_gen = min(best(1:gen+1));
             
             if (sObjV(stopN)-sObjV(1) <= 1e-15)
                   break;
-            end  
-            
-
+            end          
         	%assign fitness values to entire population - Fintess fuction
         	FitnV=ranking(ObjV);
-            curr_gen_minCost= min(ObjV);
-            curr_gen_maxFitness=1000/curr_gen_minCost;
         	%select individuals for breeding
         	SelCh=select('sus', Chrom, FitnV, GGAP);% stochastic universal sampling (SUS)
         	%recombine individuals (crossover)
@@ -78,40 +73,7 @@ function best_all_gen = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, 
             
             Chrom = tsp_ImprovePopulation(NIND, NVAR, Chrom,LOCALLOOP,Dist);
         	%increment generation counter
-            
- %------------------------------------------------------
-            %Stopping criterions:
-            sc = stopping_criteria;
-            
-            switch stop_crit
-                case 1 %limited_cost ??to be checked
-          
-                case 2 %efficiency 
-                    if (gen == 0 )
-                        efficiency_lim = curr_gen_maxFitness/(gen+1);
-                    end
-                    STOP = sc.efficiency_limit(curr_gen_maxFitness,gen,efficiency_lim);
-                    
-                case 3 %max_improvement 
-                    STOP = sc.max_improvement(gen , best, best_all_gen);
-                    
-                case 4 %diversity in phenotype
-                    STOP = sc.diversity_pheno();
-                
-                otherwise
-                    warning('Unexpected stopping criterion type.')
-                    STOP = false ; 
-            end
-            
-            %Decide if stopp according with selected criterion
-            if(STOP)
-                break;
-            end
-        
-            
-%------------------------------------------------------
-        	gen=gen+1;  
-                   
+        	gen=gen+1;            
         end
         
 end
