@@ -1,0 +1,22 @@
+
+function [NewChrom ObjV] =  worse_replacement(Chrom, offspring, ObjV ,offs_ObjV);
+
+    %Calculate fitness values
+    parents_Fitness = fitness_funct(ObjV);
+    offs_Fitness = fitness_funct(offs_ObjV);
+    
+    NewChrom = zeros(size(Chrom));
+    
+    %Compare fitness values
+    for i = 1:size(NewChrom,1)
+        
+        
+        NewChrom(i)
+
+
+
+ObjV
+
+
+end
+% End of function

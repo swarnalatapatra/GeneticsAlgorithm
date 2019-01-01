@@ -1,4 +1,4 @@
-function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit)
+function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit,replace_worst)
 % usage: run_ga(x, y, 
 %               NIND, MAXGEN, NVAR, 
 %               ELITIST, STOP_PERCENTAGE, 
@@ -68,25 +68,43 @@ function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELI
             %----------------------------------------------------------------------
             %Alternative fitness function, used as metric for stopping
             %criterion
-            constant_fitness = 1; %created to avoid fitness increase values to be insignificant with respect to the number of generation
-            Fitness = constant_fitness./(ObjV);
-            curr_gen_maxFitness=max(Fitness);
+            parents_Fitness = fitness_funct(ObjV);
+            curr_gen_maxFitness=max(parents_Fitness);
             best_fitness(gen+1) = curr_gen_maxFitness;
             %--------------------------------------------------------------------
+            %Q7. Alternaitve survivor selection strategy: Replace worst
+            %(GENITOR) pp.88 from book
             
-        	%select individuals for breeding
-        	SelCh=select('sus', Chrom, FitnV, GGAP);% stochastic universal sampling (SUS)
-        	%recombine individuals (crossover)
-            SelCh = recombin(CROSSOVER,SelCh,PR_CROSS);
-            SelCh=mutateTSP(MUTATION,SelCh,PR_MUT);
-            %evaluate offspring, call objective function  %COST function
-        	ObjVSel = tspfun(SelCh,Dist);
-            %reinsert offspring into population
-        	[Chrom ObjV]=reins(Chrom,SelCh,1,1,ObjV,ObjVSel);
-            
-            Chrom = tsp_ImprovePopulation(NIND, NVAR, Chrom,LOCALLOOP,Dist);
-        	%increment generation counter
+            if (replace_worst ==1) 
+                    %recombine individuals (crossover)
+                    offspring = recombin(CROSSOVER,Chrom,PR_CROSS);
+                    offspring = mutateTSP(MUTATION,offspring,PR_MUT);
 
+                    %evaluate offspring, call objective function  %COST function
+                    offs_ObjV = tspfun_path(offspring,Dist,NIND,NVAR); 
+                    
+                    %New generation after survival and cost
+                    [Chrom ObjV] = worse_replacement(Chrom, offspring, ObjV ,offs_ObjV);
+                   
+
+            else
+                    %--------------------------------------------------------------------
+                    %ELITISM OPTION 
+                    %select individuals for breeding
+                    SelCh=select('sus', Chrom, FitnV, GGAP);% stochastic universal sampling (SUS)
+                    %recombine individuals (crossover)
+                    SelCh = recombin(CROSSOVER,SelCh,PR_CROSS);
+                    SelCh=mutateTSP(MUTATION,SelCh,PR_MUT);
+                    %evaluate offspring, call objective function  %COST function
+                    ObjVSel = tspfun_path(SelCh,Dist,NIND,NVAR); 
+                    %reinsert offspring into population
+                    [Chrom ObjV]=reins(Chrom,SelCh,1,1,ObjV,ObjVSel);
+                    
+            end
+            
+            %2-Opt - LOCALLOOP
+            Chrom = tsp_ImprovePopulation(NIND, NVAR, Chrom,LOCALLOOP,Dist);
+            
             %------------------------------------------------------
             %Stopping criterions:
             sc = stopping_criteria;
@@ -108,7 +126,7 @@ function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELI
                     STOP = sc.max_improvement(gen , best, best_all_gen);
                     
                 case 4 %diversity in phenotype/fitness function
-                    STOP = sc.diversity_pheno(Fitness,gen);
+                    STOP = sc.diversity_pheno(parents_Fitness,gen);
                 
                 otherwise
                     warning('Unexpected stopping criterion type.')
@@ -121,8 +139,8 @@ function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELI
             end
 
 %------------------------------------------------------
-
-            %increase generation number
+            
+            %increment generation counter
         	gen=gen+1;  
                    
         end
