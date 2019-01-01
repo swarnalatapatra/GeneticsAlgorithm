@@ -74,9 +74,24 @@ methods
            end
        end
    end
-           
-end
    
-   
+    function STOP = choose_stopping_criteria(sc, stop_crit, curr_gen_maxFitness, gen, best, best_all_gen, Fitness)
+        
+        switch stop_crit                   
+            case 1 %max_improvement 
+                STOP = sc.max_improvement(gen , best, best_all_gen);             
+            case 2 %diversity in phenotype/fitness function
+                STOP = sc.diversity_pheno(Fitness,gen);    
+            case 3 %efficiency 
+                STOP = sc.efficiency_limit(curr_gen_maxFitness,gen);
+            otherwise
+                warning('Unexpected stopping criterion type.')
+                STOP = false ; 
+        end
+    end 
+    
+end %end methods
+
+
 end
 

@@ -90,34 +90,13 @@ function best_all_gen = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, 
  %------------------------------------------------------
             %Stopping criterions:
             sc = stopping_criteria;
-            
-            switch stop_crit
-                %case 1 %limited_cost ??to be checked %TODO
-          
-                case 1 %efficiency 
-%                     STOP = false;
-%                     if (gen == 0 )
-%                         efficiency_lim = 0 ; %curr_gen_maxFitness/(gen+1);                       
-%                     else
-                        STOP = sc.efficiency_limit(curr_gen_maxFitness,gen);
-%                     end
+            %choose_stopping_criteria
+            STOP = sc.choose_stopping_criteria(stop_crit, curr_gen_maxFitness, gen, best, best_all_gen, Fitness);
 
-                case 2 %max_improvement 
-                    STOP = sc.max_improvement(gen , best, best_all_gen);
-                    
-                case 3 %diversity in phenotype/fitness function
-                    STOP = sc.diversity_pheno(Fitness,gen);
-                
-                otherwise
-                    warning('Unexpected stopping criterion type.')
-                    STOP = false ; 
-            end
-            
             %Decide if stopp according with selected criterion
             if(STOP)
                 break;
             end
-
 %------------------------------------------------------
 
             %increase generation number

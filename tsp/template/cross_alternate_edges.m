@@ -1,3 +1,4 @@
+%For ADJACENCY Representation
 % low level function for calculating an offspring
 % given 2 parent in the Parents - agrument
 % Parents is a matrix with 2 rows, each row
