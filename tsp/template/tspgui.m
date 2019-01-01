@@ -12,9 +12,12 @@ STOP_PERCENTAGE=.95;    % percentage of equal fitness individuals for stopping
 PR_CROSS=.95;     % probability of crossover
 PR_MUT=.05;       % probability of mutation
 LOCALLOOP=0;      % local loop removal
-MUTATION = 'insertion' ; %default mutation operator
-%CROSSOVER = 'xalt_edges';  % default crossover operator
-CROSSOVER = 'order_crossover'; %order crossover for path representation
+
+MUTATION = 'insertion'; % default mutation operator
+%MUTATION = 'inversion';
+
+CROSSOVER = 'xalt_edges';  % default crossover operator
+%CROSSOVER = 'order_crossover'; %order crossover for path representation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % read an existing population
@@ -211,7 +214,7 @@ set(fh,'Visible','on');
 
 %-----------------------------------------------------------------------------------
     replace_worst = 1; %1 or 0 ;
-    run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit,replace_worst);
+   % run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit,replace_worst);
 
     
 end
