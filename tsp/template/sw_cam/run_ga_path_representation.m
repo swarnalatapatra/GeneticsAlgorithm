@@ -38,7 +38,7 @@ function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELI
         % number of individuals of equal fitness needed to stop
         stopN=ceil(STOP_PERCENTAGE*NIND);
         % evaluate initial population
-        ObjV = tspfun_path(Chrom,Dist,NIND,NVAR);
+        ObjV = tspfun_path(Chrom,Dist);
         best=zeros(1,MAXGEN);
         best_fitness = zeros(1,MAXGEN);
         % generational loop
@@ -81,7 +81,7 @@ function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELI
                     offspring = mutateTSP(MUTATION,offspring,PR_MUT);
 
                     %evaluate offspring, call objective function  %COST function
-                    offs_ObjV = tspfun_path(offspring,Dist,NIND,NVAR); 
+                    offs_ObjV = tspfun_path(offspring,Dist); 
                     
                     %New generation after survival and cost
                     [Chrom ObjV] = worse_replacement(Chrom, offspring, ObjV ,offs_ObjV);
@@ -96,7 +96,7 @@ function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELI
                     SelCh = recombin(CROSSOVER,SelCh,PR_CROSS);
                     SelCh=mutateTSP(MUTATION,SelCh,PR_MUT);
                     %evaluate offspring, call objective function  %COST function
-                    ObjVSel = tspfun_path(SelCh,Dist,NIND,NVAR); 
+                    ObjVSel = tspfun_path(SelCh,Dist); 
                     %reinsert offspring into population
                     [Chrom ObjV]=reins(Chrom,SelCh,1,1,ObjV,ObjVSel);
                     

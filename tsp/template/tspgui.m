@@ -213,8 +213,9 @@ set(fh,'Visible','on');
     %run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3 , stop_crit);
 
 %-----------------------------------------------------------------------------------
-    replace_worst = 1; %1 or 0 ;
-   % run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit,replace_worst);
+    %replace_worst = 1; %1 or 0 ;
+    replace_worst = 0; %for elitism ;
+    run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit,replace_worst);
 
     
 end
