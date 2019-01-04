@@ -1,0 +1,6 @@
+    %range definition for the parameters
+    ranges("NIND") = 10:99:1000; % 10:50:1000;
+    ranges("MAXGEN") = 10:99:1000;%10:10:1000;
+    ranges("ELITIST") = 0:0.1:1;%0:20:100;
+    ranges("PROB.CROSS") = 0:0.1:1;%0:20:100;
+    ranges("PROB.MUT") =  0:0.1:1;%0:20:100;

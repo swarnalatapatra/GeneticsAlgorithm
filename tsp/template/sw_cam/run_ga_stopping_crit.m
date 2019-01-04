@@ -1,4 +1,4 @@
-function best_all_gen = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, stop_crit)
+function [best_all_gen , best_gen_time, best_gen] = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, stop_crit)
 % usage: run_ga(x, y, 
 %               NIND, MAXGEN, NVAR, 
 %               ELITIST, STOP_PERCENTAGE, 
@@ -16,7 +16,8 @@ function best_all_gen = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, 
 % CROSSOVER: the crossover operator
 % calculate distance matrix between each pair of cities
 % ah1, ah2, ah3: axes handles to visualise tsp
-{NIND MAXGEN NVAR ELITIST STOP_PERCENTAGE PR_CROSS PR_MUT CROSSOVER LOCALLOOP}
+
+%{NIND MAXGEN NVAR ELITIST STOP_PERCENTAGE PR_CROSS PR_MUT CROSSOVER LOCALLOOP}
 
 
         GGAP = 1 - ELITIST;
@@ -40,8 +41,10 @@ function best_all_gen = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, 
         % evaluate initial population
         ObjV = tspfun(Chrom,Dist);
         best=zeros(1,MAXGEN);
+        gen_time=zeros(1,MAXGEN);
         best_fitness = zeros(1,MAXGEN);
         % generational loop
+        tic
         while gen<MAXGEN
             sObjV=sort(ObjV);
           	best(gen+1)=min(ObjV);
@@ -54,14 +57,14 @@ function best_all_gen = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, 
                 end
             end
             
-            visualizeTSP(x,y,adj2path(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
-            [best_all_gen, index ] = min(best(1:gen+1));
-            best_gen = index -1 ; %stores the generation where the best solution was reached.
+            %ToDO: Commented visualization
             
-            %Template stopping criterion
-            if (sObjV(stopN)-sObjV(1) <= 1e-15)
-                  break;
-            end  
+           % visualizeTSP(x,y,adj2path(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
+            [best_all_gen, index ] = min(best(1:gen+1));
+            best_gen = index -1; %stores the generation where the best solution was reached.
+            gen_time(gen+1) = toc;
+            best_gen_time = gen_time(index);
+            
             
         	%assign fitness values to entire population - Fintess fuction
         	FitnV=ranking(ObjV); %normalized between 0-2 ?
@@ -88,14 +91,23 @@ function best_all_gen = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, 
         	%increment generation counter
             
  %------------------------------------------------------
-            %Stopping criterions:
-            sc = stopping_criteria;
-            %choose_stopping_criteria
-            STOP = sc.choose_stopping_criteria(stop_crit, curr_gen_maxFitness, gen, best, best_all_gen, Fitness);
+            if(stop_crit ~= 0)
+         
+                %Template stopping criterion
+                if (sObjV(stopN)-sObjV(1) <= 1e-15)
+                    print('Stoped by Template stopping criterion')
+                    break;  
+                end  
+                
+                %Implemented Stopping criterions:
+                sc = stopping_criteria;
+                %choose_stopping_criteria
+                STOP = sc.choose_stopping_criteria(stop_crit, curr_gen_maxFitness, gen, best, best_all_gen, Fitness);
 
-            %Decide if stopp according with selected criterion
-            if(STOP)
-                break;
+                %Decide if stopp according with selected criterion
+                if(STOP)
+                    break;
+                end
             end
 %------------------------------------------------------
 

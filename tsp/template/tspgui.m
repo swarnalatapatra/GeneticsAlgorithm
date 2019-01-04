@@ -15,7 +15,7 @@ LOCALLOOP=0;      % local loop removal
 
 
 %New parameters --------------------------------------------
-REPRESENTATION = 0 ; %1: ADJACENCY ; 0: PATH 
+REPRESENTATION = 1 ; % 0: PATH  ; 1: ADJACENCY ; 
 
 if(REPRESENTATION == 1)
    CROSSOVER = 'xalt_edges';  % default crossover operator For ADJACENCY Representation
@@ -26,7 +26,7 @@ end
 MUTATION = 'inversion';% default mutation operator, swapping
 %MUTATION = 'insertion'; 
 
-STOP_CRIT = 1;%1 ; %Integer between 1-3
+STOP_CRIT = 0;%1 ; %Integer between 0-3 ; 0 for non stopping crit
     
 REPLACE_WORST = 0; %0 for elitism ; 1 for replace worst
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -70,6 +70,10 @@ end
 % start with first dataset
 data = load(['datasets/' datasets{1}]);
 x=data(:,1)/max([data(:,1);data(:,2)]);y=data(:,2)/max([data(:,1);data(:,2)]); %normalization
+
+%For benchmark problem switched off scaling:
+%x = data(:,1) ; y = data(:,2);
+
 NVAR=size(data,1);
 
 datasets
@@ -214,19 +218,19 @@ set(fh,'Visible','on');
 %-----------------------------------------------------------------------------------
     %Parameter variation: (Question 2) (For ADJACENCY Representation)
     
-    %parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3);
+    parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST,STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT);
 
 %-----------------------------------------------------------------------------------
     %stopping_criteria: (Question 3)
     %For ADJACENCY Representation
     %PR_MUT = 0 ;
-    if(REPRESENTATION == 1) 
-        run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT);
-    end
-%-----------------------------------------------------------------------------------
-    %Alternative representation (Question 4)
-    %For PATH Representation
-     if(REPRESENTATION == 0) 
-        run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST);
-    end
+%     if(REPRESENTATION == 1) 
+%         run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT);
+%     end
+% %-----------------------------------------------------------------------------------
+%     %Alternative representation (Question 4)
+%     %For PATH Representation
+%      if(REPRESENTATION == 0) 
+%         run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST);
+%     end
 end
