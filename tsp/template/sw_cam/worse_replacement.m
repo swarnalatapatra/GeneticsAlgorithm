@@ -2,6 +2,8 @@
 %population are selected for replacement by comparing the fitness of the
 %parent and offspring. ? is different for each iteration.
 
+%http://shodhganga.inflibnet.ac.in/bitstream/10603/32680/17/17_chapter%207.pdf
+
 function [Chrom ObjV] =  worse_replacement(Chrom, offspring, ObjV ,offs_ObjV);
 
     %Calculate fitness values

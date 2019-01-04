@@ -7,11 +7,13 @@ while ( length > 1 )
    path(i) = path(j);
    path(j) = temp;
    length = length - 2;
-   if ( ++i >= ncities ) 
-       i = 0;
+   i=i+1;
+   if ( i >= ncities ) 
+       i = 1;%0;
    end
-   if ( --j <  0 ) 
-       j = ncities - 1;
+   j = j-1;
+   if ( j <  1 ) 
+       j = ncities ;
    end
 end
 

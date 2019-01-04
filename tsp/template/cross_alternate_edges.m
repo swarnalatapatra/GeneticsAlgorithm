@@ -35,6 +35,9 @@ function Offspring=cross_alternate_edges(Parents);
         % +2*direction
         
         % if city already visited, try other direction
+        if(new_city<=0)
+            display(new_city)
+        end
         if visited_list(new_city)==1
             direction=1-direction; % switch direction: 0->1, 1->0
             new_city=AllParents(parentNr+2*direction,walking_index);

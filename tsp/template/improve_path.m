@@ -25,6 +25,7 @@ for len = 2:maxlen
                - Dist(path(1,start),path(1,mod(stop+1 -1 ,ncities)+1));
         if ( gain > 0.0 ) 
             path = SwapSubpath(ncities, path, start, len);
+            
         end
     end
 end

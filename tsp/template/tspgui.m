@@ -2,8 +2,6 @@ function tspgui()
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-NIND=50;            % Number of individuals
-MAXGEN= 150;		% Maximum no. of generations
 NVAR=26;            % No. of variables % no. of cities is changed according to the file selected
 PRECI=1;            % Precision of variables
 ELITIST=0.05;       % percentage of the elite population
@@ -11,11 +9,18 @@ GGAP=1-ELITIST;		% Generation gap
 STOP_PERCENTAGE=.95;    % percentage of equal fitness individuals for stopping
 PR_CROSS=.95;       % probability of crossover
 PR_MUT=.05;         % probability of mutation
-LOCALLOOP=0;        % local loop removal
+
+LOCALLOOP=1;        % local loop removal
+MAXGEN= 150;		% Maximum no. of generations
+NIND=50;            % Number of individuals
 
 
 %New parameters --------------------------------------------
-REPRESENTATION = 1 ; % 0: PATH  ; 1: ADJACENCY ; 
+REPRESENTATION = 0 ; % 0: PATH  ; 1: ADJACENCY ; 
+STOP_CRIT = 0;%1 ; %Integer between 0-3 ; 0 for non stopping crit
+REPLACE_WORST = 0; %0 for elitism ; 1 for replace worst
+MUTATION = 'inversion';% default mutation operator, swapping
+%MUTATION = 'insertion'; 
 
 if(REPRESENTATION == 1)
    CROSSOVER = 'xalt_edges';  % default crossover operator For ADJACENCY Representation
@@ -23,12 +28,7 @@ else
    CROSSOVER = 'order_crossover'; %order crossover for PATH representation  
 end
 
-MUTATION = 'inversion';% default mutation operator, swapping
-%MUTATION = 'insertion'; 
-
-STOP_CRIT = 0;%1 ; %Integer between 0-3 ; 0 for non stopping crit
-    
-REPLACE_WORST = 0; %0 for elitism ; 1 for replace worst
+   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % read an existing population
@@ -218,7 +218,7 @@ set(fh,'Visible','on');
 %-----------------------------------------------------------------------------------
     %Parameter variation: (Question 2) (For ADJACENCY Representation)
     
-    parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST,STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT);
+   % parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST,STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT);
 
 %-----------------------------------------------------------------------------------
     %stopping_criteria: (Question 3)
@@ -228,9 +228,9 @@ set(fh,'Visible','on');
 %         run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT);
 %     end
 % %-----------------------------------------------------------------------------------
-%     %Alternative representation (Question 4)
-%     %For PATH Representation
-%      if(REPRESENTATION == 0) 
-%         run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST);
-%     end
+    %Alternative representation (Question 4)
+    %For PATH Representation
+     if(REPRESENTATION == 0) 
+        run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST);
+    end
 end

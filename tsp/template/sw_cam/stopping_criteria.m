@@ -75,13 +75,13 @@ methods
        end
    end
    
-    function STOP = choose_stopping_criteria(sc, stop_crit, curr_gen_maxFitness, gen, best, best_all_gen, Fitness)
+    function STOP = choose_stopping_criteria(sc, stop_crit, curr_gen_maxFitness, gen, best, best_all_gen, parents_Fitness)
         
         switch stop_crit                   
             case 1 %max_improvement 
                 STOP = sc.max_improvement(gen , best, best_all_gen);             
             case 2 %diversity in phenotype/fitness function
-                STOP = sc.diversity_pheno(Fitness,gen);    
+                STOP = sc.diversity_pheno(parents_Fitness,gen);    
             case 3 %efficiency 
                 STOP = sc.efficiency_limit(curr_gen_maxFitness,gen);
             otherwise

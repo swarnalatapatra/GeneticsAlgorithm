@@ -18,7 +18,9 @@ function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELI
 % ah1, ah2, ah3: axes handles to visualise tsp
 {NIND MAXGEN NVAR ELITIST STOP_PERCENTAGE PR_CROSS PR_MUT CROSSOVER LOCALLOOP}
 
-
+        %seed
+        %rng(0);
+        
         GGAP = 1 - ELITIST;
         mean_fits=zeros(1,MAXGEN+1);
         worst=zeros(1,MAXGEN+1);
@@ -57,11 +59,6 @@ function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELI
             visualizeTSP(x,y,(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
             best_all_gen = min(best(1:gen+1));
             
-            %Template stopping criterion
-            if (sObjV(stopN)-sObjV(1) <= 1e-15)
-                  break;
-            end          
-       
         	%assign fitness values to entire population - Fintess fuction
         	FitnV=ranking(ObjV); %normalized between 0-2 ?
             
@@ -103,20 +100,28 @@ function best_all_gen = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELI
             end
             
             %2-Opt - LOCALLOOP
-            Chrom = tsp_ImprovePopulation(NIND, NVAR, Chrom,LOCALLOOP,Dist);
+            Chrom = tsp_ImprovePopulationPath(NIND, NVAR, Chrom,LOCALLOOP,Dist);
             
             %------------------------------------------------------
-            %Stopping criterions:
-            sc = stopping_criteria;
-            %choose_stopping_criteria
-            STOP = sc.choose_stopping_criteria(stop_crit, curr_gen_maxFitness, gen, best, best_all_gen, parents_Fitness);
+            if(stop_crit ~= 0)
+         
+                %Template stopping criterion
+                if (sObjV(stopN)-sObjV(1) <= 1e-15)
+                    print('Stoped by Template stopping criterion')
+                    break;  
+                end  
+                
+                %Implemented Stopping criterions:
+                sc = stopping_criteria;
+                %choose_stopping_criteria
+                STOP = sc.choose_stopping_criteria(stop_crit, curr_gen_maxFitness, gen, best, best_all_gen, parents_Fitness);
 
-            %Decide if stopp according with selected criterion
-            if(STOP)
-                break;
+                %Decide if stopp according with selected criterion
+                if(STOP)
+                    break;
+                end
             end
             %------------------------------------------------------
-
             
             %increment generation counter
         	gen=gen+1;  
