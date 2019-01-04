@@ -2,16 +2,16 @@ function tspgui()
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-NIND=50;		% Number of individuals
-MAXGEN=100;		% Maximum no. of generations
-NVAR=26;		% No. of variables
-PRECI=1;		% Precision of variables
-ELITIST=0.05;    % percentage of the elite population
+NIND=50;            % Number of individuals
+MAXGEN= 150;		% Maximum no. of generations
+NVAR=26;            % No. of variables % no. of cities is changed according to the file selected
+PRECI=1;            % Precision of variables
+ELITIST=0.05;       % percentage of the elite population
 GGAP=1-ELITIST;		% Generation gap
 STOP_PERCENTAGE=.95;    % percentage of equal fitness individuals for stopping
-PR_CROSS=.95;     % probability of crossover
-PR_MUT=.05;       % probability of mutation
-LOCALLOOP=0;      % local loop removal
+PR_CROSS=.95;       % probability of crossover
+PR_MUT=.05;         % probability of mutation
+LOCALLOOP=0;        % local loop removal
 
 
 %New parameters --------------------------------------------

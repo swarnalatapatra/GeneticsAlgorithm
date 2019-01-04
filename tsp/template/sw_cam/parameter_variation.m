@@ -9,26 +9,31 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
     parameters = ["NIND", "MAXGEN", "ELITIST", "PROB.CROSS", "PROB.MUT"];
     ranges = containers.Map;
     
-        number_of_runs = 5 ;
     
         %range definition for the parameters
-        ranges("NIND") = 10:100:1000; % 10:50:1000;
-        ranges("MAXGEN") = 10:100:1000;%10:10:1000;
-        ranges("ELITIST") = 0:0.1:1;%0:0.05:1;
-        ranges("PROB.CROSS") = 0:0.1:1;%0:0.05:1;
-        ranges("PROB.MUT") =  0:0.1:1;%0:0.05:1;
+%         %range with lower iterrations
+%         number_of_runs = 3 ; %ideal 10
+%         ranges("NIND") = 10:300:1000 ;%3 points 
+%         ranges("MAXGEN") = 10:300:1000 ;%3 points
+%         ranges("ELITIST") = 0:0.2:1; %5 points
+%         ranges("PROB.CROSS") = 0:0.2:1; %5 points
+%         ranges("PROB.MUT") = 0:0.2:1; %5 points
     
-        
+        %range with higher iterations
+        number_of_runs = 10;
+        ranges("NIND") = 10:33:1000; %30 points 
+        ranges("MAXGEN") = 10:33:1000; %30 points
+        ranges("ELITIST") = 0:0.05:1; %20 points
+        ranges("PROB.CROSS") = 0:0.05:1; %20 points
+        ranges("PROB.MUT") =  0:0.05:1; %20 points
     
     
     for j = 1:size(parameters,2)%parameter = parameters
        parameter = parameters(j);
        curr_param_vals = ranges(parameter);
-       dist_param = zeros(1, size(curr_param_vals,2));
-       time_min_dist = zeros(1, size(curr_param_vals,2));
-       gen_min_dist = zeros(1, size(curr_param_vals,2));
-
-
+       dist_param = zeros(number_of_runs, size(curr_param_vals,2));
+       time_min_dist = zeros(number_of_runs, size(curr_param_vals,2));
+       gen_min_dist = zeros(number_of_runs, size(curr_param_vals,2));
     
         %Assign default values for parameters
         NIND = DEF_NIND;
@@ -46,41 +51,41 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
             for i = 1:size(curr_param_vals,2)
                 NIND = curr_param_vals(i);
                 [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,number_of_runs);
-                dist_param(i) = best_all_gen;
-                time_min_dist(i) = best_gen_time;
-                gen_min_dist(i) = best_gen;
+                dist_param(:,i) = best_all_gen;
+                time_min_dist(:,i) = best_gen_time;
+                gen_min_dist(:,i) = best_gen;
             end
          case "MAXGEN"
              for i = 1:size(curr_param_vals,2)
                 MAXGEN = curr_param_vals(i);
                 [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,number_of_runs);
-                dist_param(i) = best_all_gen;
-                time_min_dist(i) = best_gen_time;
-                gen_min_dist(i) = best_gen;
+                dist_param(:,i) = best_all_gen;
+                time_min_dist(:,i) = best_gen_time;
+                gen_min_dist(:,i) = best_gen;
             end
         case "ELITIST"
             for i = 1:size(curr_param_vals,2)
                 ELITIST = curr_param_vals(i);
                 [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,number_of_runs);
-                dist_param(i) = best_all_gen;
-                time_min_dist(i) = best_gen_time;
-                gen_min_dist(i) = best_gen;
+                dist_param(:,i) = best_all_gen;
+                time_min_dist(:,i) = best_gen_time;
+                gen_min_dist(:,i) = best_gen;
              end
         case "PROB.CROSS"
             for i = 1:size(curr_param_vals,2)
                 PR_CROSS = curr_param_vals(i);
                 [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,number_of_runs);
-                dist_param(i) = best_all_gen;
-                time_min_dist(i) = best_gen_time;
-                gen_min_dist(i) = best_gen;
+                dist_param(:,i) = best_all_gen;
+                time_min_dist(:,i) = best_gen_time;
+                gen_min_dist(:,i) = best_gen;
              end
         case "PROB.MUT"
             for i = 1:size(curr_param_vals,2)
                 PR_MUT = curr_param_vals(i);
                 [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,number_of_runs);
-                dist_param(i) = best_all_gen;
-                time_min_dist(i) = best_gen_time;
-                gen_min_dist(i) = best_gen;
+                dist_param(:,i) = best_all_gen;
+                time_min_dist(:,i) = best_gen_time;
+                gen_min_dist(:,i) = best_gen;
              end
 %         case "LOCALLOOP"
 %             for param_val = range_LOCALLOOP
@@ -91,56 +96,49 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
     end 
         
     %Store variables
-    
     filename = "results/" + parameter + ".mat"; 
     save(filename, 'curr_param_vals', 'dist_param' , 'time_min_dist', 'gen_min_dist');
     
     
     %Iterate for every parameter  (variate one parameter at a time)
-    %params_fig = figure
-    figure
-    %Plotting
-    %p = axes('Parent',params_fig);    
-    
-
-%    axes(p); 
-   % subplot(2,3,j);
-    subplot(1,2,1);
-    plot(curr_param_vals ,dist_param,'r-');
-    grid on
-    xlabel(parameter);
-    ylabel('Avg sol. Dist across generations (norm)');       
-    
-    
-    subplot(1,2,2);
-    plot(curr_param_vals ,time_min_dist,'b-');
-    grid on
-    xlabel(parameter);
-    ylabel('Avg time to get sol. (s)');     
-    
+%     figure
+% 
+%     subplot(1,2,1);
+%     plot(curr_param_vals ,dist_param,'r-');
+%     grid on
+%     xlabel(parameter);
+%     ylabel('Avg. Best solution across runs');       
+%     
+%     
+%     subplot(1,2,2);
+%     plot(curr_param_vals ,time_min_dist,'b-');
+%     grid on
+%     xlabel(parameter);
+%     ylabel('Avg time to get best sol. (s)');     
+%     
+   
     figure
     
     subplot(1,2,1);
-    plot(curr_param_vals ,dist_param,'r-');
+    %plot(curr_param_vals ,dist_param,'r-');
+    stdshade(dist_param,0.1,'r',curr_param_vals);
     grid on
     xlabel(parameter);
-    ylabel('Avg sol. Dist across generations (norm)');       
+    ylabel('Avg. Best solution across runs');       
     
     
     subplot(1,2,2);
-    plot(curr_param_vals ,gen_min_dist,'b-');
+    %plot(curr_param_vals ,gen_min_dist,'b-');
+    stdshade(gen_min_dist,0.1,'b',curr_param_vals);
     grid on
     xlabel(parameter);
-    ylabel('Avg generations to get sol. (s)');    
+    ylabel('Avg generations to get best sol. (s)');    
 %     if (j == 2)
 %         
 %         break;
 %     end
 %     
     end
-    
-    
-    
-    
+        
 end %End of function
 
