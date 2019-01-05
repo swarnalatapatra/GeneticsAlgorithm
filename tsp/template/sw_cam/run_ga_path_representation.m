@@ -60,7 +60,7 @@ function [best_all_gen , best_gen_time, best_gen] = run_ga_path_representation(x
                 end
             end
             
-            visualizeTSP(x,y,(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
+            %visualizeTSP(x,y,(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
             [best_all_gen, index ] = min(best(1:gen+1));
             best_gen = index -1; %stores the generation where the best solution was reached.
             gen_time(gen+1) = toc;

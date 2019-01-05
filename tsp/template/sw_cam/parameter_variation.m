@@ -12,20 +12,20 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
     
         %range definition for the parameters
         %range with lower iterrations
-        number_of_runs = 3 ; %ideal 10
-        ranges("NIND") = 10:300:1000 ;%3 points 
-        ranges("MAXGEN") = 10:300:1000 ;%3 points
-        ranges("ELITIST") = 0:0.2:1; %5 points
-        ranges("PROB.CROSS") = 0:0.2:1; %5 points
-        ranges("PROB.MUT") = 0:0.2:1; %5 points
+%         number_of_runs = 3 ; %ideal 10
+%         ranges("NIND") = 10:300:1000 ;%3 points 
+%         ranges("MAXGEN") = 10:300:1000 ;%3 points
+%         ranges("ELITIST") = 0:0.2:1; %5 points
+%         ranges("PROB.CROSS") = 0:0.2:1; %5 points
+%         ranges("PROB.MUT") = 0:0.2:1; %5 points
     
         %range with higher iterations
-%         number_of_runs = 10;
-%         ranges("NIND") = 10:33:1000; %30 points 
-%         ranges("MAXGEN") = 10:33:1000; %30 points
-%         ranges("ELITIST") = 0:0.05:1; %20 points
-%         ranges("PROB.CROSS") = 0:0.05:1; %20 points
-%         ranges("PROB.MUT") =  0:0.05:1; %20 points
+        number_of_runs = 10;
+        ranges("NIND") = 10:33:1000; %30 points 
+        ranges("MAXGEN") = 10:33:1000; %30 points
+        ranges("ELITIST") = 0:0.05:1; %20 points
+        ranges("PROB.CROSS") = 0:0.05:1; %20 points
+        ranges("PROB.MUT") =  0:0.05:1; %20 points
     
     
     for j = 1:size(parameters,2)%parameter = parameters

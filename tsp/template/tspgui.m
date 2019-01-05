@@ -10,18 +10,19 @@ STOP_PERCENTAGE=.95;    % percentage of equal fitness individuals for stopping
 PR_CROSS=.95;       % probability of crossover
 PR_MUT=.05;         % probability of mutation
 
-LOCALLOOP=1;        % local loop removal
-MAXGEN= 150;		% Maximum no. of generations
-NIND=50;            % Number of individuals
 
+%--------------------------------------------
+LOCALLOOP=0;        % local loop removal
+MAXGEN= 200;		% Maximum no. of generations
+NIND=200;            % Number of individuals
 
 %New parameters --------------------------------------------
-REPRESENTATION = 0 ; % 0: PATH  ; 1: ADJACENCY ; 
+REPRESENTATION = 1 ; % 0: PATH  ; 1: ADJACENCY ; 
 STOP_CRIT = 0;%1 ; %Integer between 0-3 ; 0 for non stopping crit
 REPLACE_WORST = 0; %0 for elitism ; 1 for replace worst
-%MUTATION = 'inversion';% default mutation operator, swapping
-MUTATION = 'insertion'; 
-FILE_NUM = 1 ; %Default 1 = 16 cities. 7 = 51 cities
+MUTATION = 'inversion';% default mutation operator, swapping
+%MUTATION = 'insertion'; 
+FILE_NUM = 7 ; %Default 1 = 16 cities. 7 = 51 cities
 
 if(REPRESENTATION == 1)
    CROSSOVER = 'xalt_edges';  % default crossover operator For ADJACENCY Representation
