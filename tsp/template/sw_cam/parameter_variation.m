@@ -6,6 +6,8 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
 
     
     %parameters to variate
+       % parameters = ["LOCALLOOP"];
+
     parameters = ["NIND", "MAXGEN", "ELITIST", "PROB.CROSS", "PROB.MUT", "LOCALLOOP"];
     ranges = containers.Map;
     
@@ -18,6 +20,8 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
 %         ranges("ELITIST") = 0:0.2:1; %5 points
 %         ranges("PROB.CROSS") = 0:0.2:1; %5 points
 %         ranges("PROB.MUT") = 0:0.2:1; %5 points
+%         ranges("LOCALLOOP") =  0:1; %1:ON and 0: OFF
+
     
         %range with higher iterations
         number_of_runs = 10;
@@ -115,13 +119,15 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
         for  i = 1:size(curr_param_vals,2)
             
             stdshade(best_per_gen_matx(:,:,i),0.1,color(i),0:(size(best_per_gen_matx,2)-1));
+            hold on
             grid on
-            xlabel('Numb');
-            ylabel('Avg. Best solution across runs');   
+            xlabel('Generation');
+            ylabel('Avg. Best solution per gen. across runs');   
+            
 
         end
-        
-        
+        legend('Local loop OFF','Local loop ON')
+        hold off      
         
     else
          %Store variables
