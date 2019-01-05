@@ -17,12 +17,12 @@ MAXGEN= 100;		% Maximum no. of generations
 NIND=50;            % Number of individuals
 
 %New parameters --------------------------------------------
-REPRESENTATION = 1; % 0: PATH  ; 1: ADJACENCY ; 
+REPRESENTATION = 0; % 0: PATH  ; 1: ADJACENCY ; 
 STOP_CRIT = 0;%1 ; %Integer between 0-3 ; 0 for non stopping crit
 REPLACE_WORST = 0; %0 for elitism ; 1 for replace worst
-MUTATION = 'inversion';% default mutation operator, swapping
-%MUTATION = 'insertion'; 
-FILE_NUM = 1;%7 ; %Default 1 = 16 cities. 7 = 51 cities
+%MUTATION = 'inversion';% default mutation operator, swapping
+MUTATION = 'insertion'; 
+FILE_NUM = 7; %Default 1 = 16 cities. 7 = 51 cities
 
 if(REPRESENTATION == 1)
    CROSSOVER = 'xalt_edges';  % default crossover operator For ADJACENCY Representation
@@ -191,13 +191,13 @@ set(fh,'Visible','on');
 %-----------------------------------------------------------------------------------
     %%Parameter variation: (Question 2) (For ADJACENCY Representation)
     
-    %parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
+    parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
 
 % %-----------------------------------------------------------------------------------
     %%stopping_criteria: (Question 3) and Alternative representation (Question 4)
     %%choose representation with REPRESENTATION variable
     
-    run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
+    %run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
     % %-----------------------------------------------------------------------------------
 
 end
