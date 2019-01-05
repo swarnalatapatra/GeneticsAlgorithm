@@ -2,7 +2,7 @@
 % Setting all parameters as a constant and varying one parameter at the time,
 % disabling stopping criterions, so we can analyse all experiments under the same conditions
 
-function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, STOP_PERCENTAGE, DEF_PR_CROSS, DEF_PR_MUT, CROSSOVER, DEF_LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT);
+function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, STOP_PERCENTAGE, DEF_PR_CROSS, DEF_PR_MUT, MUTATION,CROSSOVER, DEF_LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT,REPLACE_WORST,REPRESENTATION);
 
     
     %parameters to variate
@@ -11,21 +11,21 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
     
     
         %range definition for the parameters
-%         %range with lower iterrations
-%         number_of_runs = 3 ; %ideal 10
-%         ranges("NIND") = 10:300:1000 ;%3 points 
-%         ranges("MAXGEN") = 10:300:1000 ;%3 points
-%         ranges("ELITIST") = 0:0.2:1; %5 points
-%         ranges("PROB.CROSS") = 0:0.2:1; %5 points
-%         ranges("PROB.MUT") = 0:0.2:1; %5 points
+        %range with lower iterrations
+        number_of_runs = 3 ; %ideal 10
+        ranges("NIND") = 10:300:1000 ;%3 points 
+        ranges("MAXGEN") = 10:300:1000 ;%3 points
+        ranges("ELITIST") = 0:0.2:1; %5 points
+        ranges("PROB.CROSS") = 0:0.2:1; %5 points
+        ranges("PROB.MUT") = 0:0.2:1; %5 points
     
         %range with higher iterations
-        number_of_runs = 10;
-        ranges("NIND") = 10:33:1000; %30 points 
-        ranges("MAXGEN") = 10:33:1000; %30 points
-        ranges("ELITIST") = 0:0.05:1; %20 points
-        ranges("PROB.CROSS") = 0:0.05:1; %20 points
-        ranges("PROB.MUT") =  0:0.05:1; %20 points
+%         number_of_runs = 10;
+%         ranges("NIND") = 10:33:1000; %30 points 
+%         ranges("MAXGEN") = 10:33:1000; %30 points
+%         ranges("ELITIST") = 0:0.05:1; %20 points
+%         ranges("PROB.CROSS") = 0:0.05:1; %20 points
+%         ranges("PROB.MUT") =  0:0.05:1; %20 points
     
     
     for j = 1:size(parameters,2)%parameter = parameters
@@ -50,7 +50,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
         case "NIND"
             for i = 1:size(curr_param_vals,2)
                 NIND = curr_param_vals(i);
-                [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,number_of_runs);
+                [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
                 dist_param(:,i) = best_all_gen;
                 time_min_dist(:,i) = best_gen_time;
                 gen_min_dist(:,i) = best_gen;
@@ -58,7 +58,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
          case "MAXGEN"
              for i = 1:size(curr_param_vals,2)
                 MAXGEN = curr_param_vals(i);
-                [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,number_of_runs);
+                [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
                 dist_param(:,i) = best_all_gen;
                 time_min_dist(:,i) = best_gen_time;
                 gen_min_dist(:,i) = best_gen;
@@ -66,7 +66,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
         case "ELITIST"
             for i = 1:size(curr_param_vals,2)
                 ELITIST = curr_param_vals(i);
-                [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,number_of_runs);
+                [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
                 dist_param(:,i) = best_all_gen;
                 time_min_dist(:,i) = best_gen_time;
                 gen_min_dist(:,i) = best_gen;
@@ -74,7 +74,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
         case "PROB.CROSS"
             for i = 1:size(curr_param_vals,2)
                 PR_CROSS = curr_param_vals(i);
-                [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,number_of_runs);
+                [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
                 dist_param(:,i) = best_all_gen;
                 time_min_dist(:,i) = best_gen_time;
                 gen_min_dist(:,i) = best_gen;
@@ -82,7 +82,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
         case "PROB.MUT"
             for i = 1:size(curr_param_vals,2)
                 PR_MUT = curr_param_vals(i);
-                [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,number_of_runs);
+                [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
                 dist_param(:,i) = best_all_gen;
                 time_min_dist(:,i) = best_gen_time;
                 gen_min_dist(:,i) = best_gen;
