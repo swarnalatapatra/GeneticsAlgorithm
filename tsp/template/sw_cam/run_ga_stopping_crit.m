@@ -1,4 +1,4 @@
-function [best_all_gen , best_gen_time, best_gen] = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, stop_crit)
+function [best_all_gen , best_gen_time, best_gen, best_per_gen] = run_ga_stopping_crit(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, stop_crit)
 % usage: run_ga(x, y, 
 %               NIND, MAXGEN, NVAR, 
 %               ELITIST, STOP_PERCENTAGE, 
@@ -64,6 +64,8 @@ function [best_all_gen , best_gen_time, best_gen] = run_ga_stopping_crit(x, y, N
             best_gen = index -1; %stores the generation where the best solution was reached.
             gen_time(gen+1) = toc;
             best_gen_time = gen_time(index);
+            best_per_gen = best(1:gen+1);
+
             
             
         	%assign fitness values to entire population - Fintess fuction

@@ -6,7 +6,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
 
     
     %parameters to variate
-    parameters = ["NIND", "MAXGEN", "ELITIST", "PROB.CROSS", "PROB.MUT", "LOCALLOOP"];
+    parameters = ["NIND", "MAXGEN", "ELITIST", "PROB.CROSS", "PROB.MUT"];
     ranges = containers.Map;
     
     
@@ -26,7 +26,8 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
         ranges("ELITIST") = 0:0.05:1; %20 points
         ranges("PROB.CROSS") = 0:0.05:1; %20 points
         ranges("PROB.MUT") =  0:0.05:1; %20 points
-        ranges("LOCALLOOP") =  0:1; %1:ON and 0: OFF
+        
+        ranges("PROB.MUT") =  0:0.05:1; %20 points
     
     
     for j = 1:size(parameters,2)%parameter = parameters
@@ -89,16 +90,12 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
                 gen_min_dist(:,i) = best_gen;
              end
         case "LOCALLOOP"
-            if(REPRESENTATION == 0) %only works for path representation (errors in adj crossover)
-                for i = 1:size(curr_param_vals,2)
-                    LOCALLOOP = curr_param_vals(i);
-                    
-%                     
-%                     [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
-%                     dist_param(:,i) = best_all_gen;
-%                     time_min_dist(:,i) = best_gen_time;
-%                     gen_min_dist(:,i) = best_gen;
-                end
+            for i = 1:size(curr_param_vals,2)
+                LOCALLOOP = curr_param_vals(i);
+                [best_all_gen , best_gen_time, best_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
+                dist_param(:,i) = best_all_gen;
+                time_min_dist(:,i) = best_gen_time;
+                gen_min_dist(:,i) = best_gen;
             end
 
     end 
