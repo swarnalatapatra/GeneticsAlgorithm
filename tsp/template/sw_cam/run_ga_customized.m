@@ -1,4 +1,4 @@
-function [best_all_gen , best_gen_time, best_gen, best_per_gen] = run_ga_path_representation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit,replace_worst)
+function [best_all_gen , best_gen_time, best_gen, best_per_gen] = run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit,replace_worst, REPRESENTATION)
 % usage: run_ga(x, y, 
 %               NIND, MAXGEN, NVAR, 
 %               ELITIST, STOP_PERCENTAGE, 
@@ -33,14 +33,23 @@ function [best_all_gen , best_gen_time, best_gen, best_per_gen] = run_ga_path_re
         % initialize population
         Chrom=zeros(NIND,NVAR);
         for row=1:NIND
-        	%Chrom(row,:)=path2adj(randperm(NVAR));
-            Chrom(row,:)=randperm(NVAR);
+            if(REPRESENTATION==1) %1: adj repr
+                Chrom(row,:)=path2adj(randperm(NVAR));
+            else
+                Chrom(row,:)=randperm(NVAR);
+            end
+            
         end
         gen=0;
         % number of individuals of equal fitness needed to stop
         stopN=ceil(STOP_PERCENTAGE*NIND);
         % evaluate initial population
-        ObjV = tspfun_path(Chrom,Dist);
+        if(REPRESENTATION==1) %1: adj repr
+            ObjV = tspfun(Chrom,Dist);
+        else
+            ObjV = tspfun_path(Chrom,Dist);
+        end
+        
         best=zeros(1,MAXGEN);
         gen_time=zeros(1,MAXGEN);
         best_fitness = zeros(1,MAXGEN);
@@ -59,8 +68,14 @@ function [best_all_gen , best_gen_time, best_gen, best_per_gen] = run_ga_path_re
                     break;
                 end
             end
+                
+             %ToDO: Commented visualization
+            if(REPRESENTATION==1) %1: adj repr
+               visualizeTSP(x,y,adj2path(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
+            else
+               visualizeTSP(x,y,(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
+            end 
             
-            %visualizeTSP(x,y,(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
             [best_all_gen, index ] = min(best(1:gen+1));
             best_gen = index -1; %stores the generation where the best solution was reached.
             gen_time(gen+1) = toc;
@@ -80,7 +95,7 @@ function [best_all_gen , best_gen_time, best_gen, best_per_gen] = run_ga_path_re
             %Q7. Alternaitve survivor selection strategy: Replace worst
             %(GENITOR) pp.88 from book
             
-            if (replace_worst ==1) 
+            if (replace_worst == 1 && REPRESENTATION==0) %replace_worst only for path representation 
                     %recombine individuals (crossover)
                     offspring = recombin(CROSSOVER,Chrom,PR_CROSS);
                     offspring = mutateTSP(MUTATION,offspring,PR_MUT);
@@ -101,10 +116,13 @@ function [best_all_gen , best_gen_time, best_gen, best_per_gen] = run_ga_path_re
                     SelCh = recombin(CROSSOVER,SelCh,PR_CROSS);
                     SelCh=mutateTSP(MUTATION,SelCh,PR_MUT);
                     %evaluate offspring, call objective function  %COST function
-                    ObjVSel = tspfun_path(SelCh,Dist); 
+                    if(REPRESENTATION==1) %1: adj repr
+                        ObjVSel = tspfun(SelCh,Dist);
+                    else
+                        ObjVSel = tspfun_path(SelCh,Dist);
+                    end
                     %reinsert offspring into population
-                    [Chrom ObjV]=reins(Chrom,SelCh,1,1,ObjV,ObjVSel);
-                    
+                    [Chrom ObjV]=reins(Chrom,SelCh,1,1,ObjV,ObjVSel); 
             end
             
             %2-Opt - LOCALLOOP
