@@ -111,12 +111,12 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
     
     if(parameter == "LOCALLOOP")
         save(filename, 'curr_param_vals', 'best_per_gen_matx');
-        color = ['r', 'b'];
+        
         for  i = 1:size(curr_param_vals,2)
             
-            stdshade(best_per_gen_matx(:,:,i),0.1,color(i),0:(size(best_per_gen_matx,2)-1));
+            stdshade(best_per_gen_matx(:,:,i),0.1,'r',0:size(best_per_gen_matx,2)-1);
             grid on
-            xlabel('Numb');
+            xlabel(parameter);
             ylabel('Avg. Best solution across runs');   
 
         end
