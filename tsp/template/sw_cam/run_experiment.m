@@ -4,7 +4,7 @@ function [dist_param , time_min_dist , gen_min_dist, best_per_gen_matx] = run_ex
 dist_param = zeros(number_of_runs, 1);
 time_min_dist = zeros(number_of_runs, 1);
 gen_min_dist = zeros(number_of_runs ,1);
-%best_per_gen_matx = zeros(number_of_runs ,MAXGEN);
+best_per_gen_matx = zeros(number_of_runs ,MAXGEN);
 
 for i=1:number_of_runs
     [best_all_gen , best_gen_time, best_gen , best_per_gen] = run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
