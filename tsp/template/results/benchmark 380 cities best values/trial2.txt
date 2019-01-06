@@ -21,3 +21,6 @@ MUTATION = 'inversion'; % default mutation operator, swapping
 %MUTATION = 'insertion'; 
 FILE_NUM = 1; %Default 2 = 16 cities. 8 = 51 cities. 1 = 380 cities. 13 = 131 cities.
 number_of_runs = 5 ; %5 or 10
+
+max([data(:,1);data(:,2)])=167
+result 2503.33
