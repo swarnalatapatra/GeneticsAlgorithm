@@ -8,12 +8,12 @@ ELITIST=0.1;       % percentage of the elite population
 GGAP=1-ELITIST;		% Generation gap
 STOP_PERCENTAGE=.95;    % percentage of equal fitness individuals for stopping
 PR_CROSS=.97;       % probability of crossover
-PR_MUT=.1;         % probability of mutation
+PR_MUT=.075;         % probability of mutation
 
 %--------------------------------------------
 LOCALLOOP=1;        % local loop removal
-MAXGEN= 1500; %1000;	% Maximum no. of generations
-NIND=1000 ;%700; %400;            % Number of individuals
+MAXGEN= 2000; %1000;	% Maximum no. of generations
+NIND=1500 ;%700; %400;            % Number of individuals
 
 %New parameters --------------------------------------------
 REPRESENTATION = 0; % 0: PATH  ; 1: ADJACENCY ; 
@@ -43,10 +43,10 @@ end
 
 % Selection of the dataset : default, start with first dataset
 data = load(['datasets/' datasets{FILE_NUM}]); 
-x=data(:,1)/max([data(:,1);data(:,2)]);y=data(:,2)/max([data(:,1);data(:,2)]); %normalization
+%x=data(:,1)/max([data(:,1);data(:,2)]);y=data(:,2)/max([data(:,1);data(:,2)]); %normalization
 
 %For benchmark problem switched off scaling:
-%x = data(:,1) ; y = data(:,2);
+x = data(:,1) ; y = data(:,2);
 
 NVAR=size(data,1);
 
