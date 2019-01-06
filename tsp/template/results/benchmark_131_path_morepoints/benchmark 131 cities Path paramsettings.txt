@@ -23,4 +23,4 @@ REPLACE_WORST = 0; %0 for elitism ; 1 for replace worst
 %MUTATION = 'inversion';% default mutation operator, swapping
 MUTATION = 'insertion'; 
 FILE_NUM = 13; %Default 2 = 16 cities. 8 = 51 cities. 1 = 380 cities. 13 = 131 cities.
-number_of_runs = 10 ; %3 or 10
+number_of_runs = 5; %3 or 10
