@@ -1,11 +1,9 @@
 %Camila and Swarna method
 % Setting all parameters as a constant and varying one parameter at the time,
 % disabling stopping criterions, so we can analyse all experiments under the same conditions
-%%%Parameter variation plotting for analysis: 
+%    %%Parameter variation plotting for analysis: 
 %%General parameters for adjacency (Question 2), local heuristic LOCALLOOP ON/OFF:
 %%(Question 5), and  survivor selection strategy: REPLACE_WORST (Question 7)
-    %%inside parameter_variation method, select (uncomment) which set of
-    %%parameters to variate and few/more amount of steps
 
 function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, STOP_PERCENTAGE, DEF_PR_CROSS, DEF_PR_MUT, MUTATION,CROSSOVER, DEF_LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT,DEF_REPLACE_WORST,REPRESENTATION,number_of_runs);
 
@@ -21,19 +19,18 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
 %%-----------------------------------------------------------------------------------
     ranges = containers.Map;
     
-    %Select amount of stepts (comment/uncomment)
     
-    %range definition for the parameters
-    %range for few steps 
-    ranges("NIND") = 10:300:1000 ;%3 points 
-    ranges("MAXGEN") = 10:300:1000 ;%3 points
-    ranges("ELITIST") = 0:0.2:1; %5 points
-    ranges("PROB.CROSS") = 0:0.2:1; %5 points
-    ranges("PROB.MUT") = 0:0.2:1; %5 points
-    ranges("LOCALLOOP") =  0:1; %1:ON and 0: OFF
+        %range definition for the parameters
+        %range with few steps 
+        ranges("NIND") = 10:300:1000 ;%3 points 
+        ranges("MAXGEN") = 10:300:1000 ;%3 points
+        ranges("ELITIST") = 0:0.2:1; %5 points
+        ranges("PROB.CROSS") = 0:0.2:1; %5 points
+        ranges("PROB.MUT") = 0:0.2:1; %5 points
+        ranges("LOCALLOOP") =  0:1; %1:ON and 0: OFF
 
-
-    %ranges for higher amount of steps
+    
+        %range higher amount of steps
 %         ranges("NIND") = 10:33:1000; %30 points 
 %         ranges("MAXGEN") = 10:33:1000; %30 points
 %         ranges("ELITIST") = 0:0.05:1; %20 points

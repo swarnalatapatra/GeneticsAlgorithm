@@ -70,11 +70,11 @@ function [best_all_gen , best_gen_time, best_gen, best_per_gen] = run_ga_customi
             end
                 
              %ToDO: Commented visualization
-%             if(REPRESENTATION==1) %1: adj repr
-%                visualizeTSP(x,y,adj2path(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
-%             else
-%                visualizeTSP(x,y,(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
-%             end 
+            if(REPRESENTATION==1) %1: adj repr
+               visualizeTSP(x,y,adj2path(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
+            else
+               visualizeTSP(x,y,(Chrom(t,:)), minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
+            end 
             
             [best_all_gen, index ] = min(best(1:gen+1));
             best_gen = index -1; %stores the generation where the best solution was reached.
