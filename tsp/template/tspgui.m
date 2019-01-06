@@ -3,7 +3,7 @@ function tspgui()
 
 %Before running this file, for testing the parameter_variation, please
 %intall the 'Curve Fitting Toolbox'  used for visualization of the mean and variance among
-%independant runs.
+%independant runs. 
 %https://nl.mathworks.com/products/curvefitting.html
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -17,9 +17,9 @@ PR_MUT=.075;         % probability of mutation
 %--------------------------------------------
 %MANUAL SETTING OF PARAMETES 
 %--------------------------------------------
-LOCALLOOP=1;        % local loop removal
+LOCALLOOP=0;        % local loop removal  %LOCALLOOP ON: ONLY WORKS FOR PATH REPRESENTATION!!
 MAXGEN= 100; %1000;	% Maximum no. of generations
-NIND=400 ;%700; %400;            % Number of individuals
+NIND=50 ;%700; %400;            % Number of individuals
 
 %-----------------------------New parameters --------------------------------------------
 %For testing stopping Crit, activate here and comment the parameter
@@ -35,7 +35,7 @@ REPRESENTATION = 0; % 0: PATH  ; 1: ADJACENCY ;
 REPLACE_WORST = 0; %0 for elitism ; 1 for replace worst  -tested for path representation.
 MUTATION = 'inversion'; % default mutation operator, swapping
 %MUTATION = 'insertion'; 
-FILE_NUM = 2; %Default 2 = 16 cities. 8 = 51 cities. 1 = 380 cities. 13 = 131 cities.
+FILE_NUM = 1; %Default 1 = 16 cities. 2 = 51 cities. 3 = 380 cities. 14 = 131 cities.
 number_of_runs = 5 ; %5 or 10
 
 
@@ -130,7 +130,11 @@ set(fh,'Visible','on');
         if lloop_value==1
             LOCALLOOP = 0;
         else
-            LOCALLOOP = 1;
+            if(REPRESENTATION == 1)
+                warning('Local heuristic only works with PATH repr. So, LOCALLOOP is set to off to continue.')
+            else
+                LOCALLOOP = 1;
+            end
         end
     end
     function ncitiesslider_Callback(hObject,eventdata)
@@ -210,6 +214,11 @@ set(fh,'Visible','on');
         
         if(selected_red{1} == "ADJACENCY")
            REPRESENTATION = 1 ;
+           if(LOCALLOOP == 1)
+               warning('Local heuristic only works with PATH repr. So, LOCALLOOP is set to off to continue.')
+               LOCALLOOP = 0;
+           end
+           
         else
            REPRESENTATION = 0; % PATH representation  
         end
@@ -252,6 +261,11 @@ set(fh,'Visible','on');
     %%General parameters for adjacency (Question 2), local heuristic LOCALLOOP ON/OFF:
     %%(Question 5), and  survivor selection strategy: REPLACE_WORST (Question 7)
     
+    %NOTE: LOCALLOOP ONLY WORKS with PATH repr. since there are errors with
+    %the xalt edges crossover for adj. repre. The error is that this
+    %crossover does not validate for internal loops in the solution, and
+    %this gets more evident when using the local heuristic method.
+    
     %%inside parameter_variation method, select (uncomment) which set of
     %%parameters to variate and few/more amount of steps
     
@@ -268,7 +282,7 @@ set(fh,'Visible','on');
     %seed enabled in this method for being able to compare results
 
     %to RUN a single run wiht stopping criteria, just modify the STOP_CRIT
-    %variable at the beggining of this document. And use the button RUN
+    %variable at the beggining of this document. And use the button START
     %from GUI
     
     %stopp_crit_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
