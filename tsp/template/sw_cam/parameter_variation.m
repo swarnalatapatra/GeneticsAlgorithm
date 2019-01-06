@@ -1,16 +1,22 @@
 %Camila and Swarna method
 % Setting all parameters as a constant and varying one parameter at the time,
 % disabling stopping criterions, so we can analyse all experiments under the same conditions
+%    %%Parameter variation plotting for analysis: 
+%%General parameters for adjacency (Question 2), local heuristic LOCALLOOP ON/OFF:
+%%(Question 5), and  survivor selection strategy: REPLACE_WORST (Question 7)
 
-function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, STOP_PERCENTAGE, DEF_PR_CROSS, DEF_PR_MUT, MUTATION,CROSSOVER, DEF_LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT,REPLACE_WORST,REPRESENTATION,number_of_runs);
+function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, STOP_PERCENTAGE, DEF_PR_CROSS, DEF_PR_MUT, MUTATION,CROSSOVER, DEF_LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT,DEF_REPLACE_WORST,REPRESENTATION,number_of_runs);
 
     
     %parameters to variate
      
-
-  %  parameters = ["NIND", "MAXGEN", "ELITIST", "PROB.CROSS", "PROB.MUT"];
-    %parameters = ["LOCALLOOP"];
-    parameters = ["REPLACE_WORST"];
+    %(Question 2) and (Question 4)
+    %parameters = ["NIND", "MAXGEN", "ELITIST", "PROB.CROSS", "PROB.MUT"];
+    %(Question 5)
+    parameters = ["LOCALLOOP"];
+    %(Question 7)
+    %parameters = ["REPLACE_WORST"];
+    
     ranges = containers.Map;
     
     
@@ -48,6 +54,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
         PR_CROSS=DEF_PR_CROSS;
         PR_MUT=DEF_PR_MUT;
         LOCALLOOP = DEF_LOCALLOOP;
+        REPLACE_WORST = DEF_REPLACE_WORST;
  
     %Select which parameter to change, keeping rest as the default value
     switch parameter
@@ -105,14 +112,14 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
                 end
             end
         case "REPLACE_WORST"
-            if(REPRESENTATION == 0) 
-                %For local heuristic
+            if(REPRESENTATION == 0) %only works for path representation 
+                %survivor selection strategy: REPLACE_WORST 
                 %Matrix: indep_runs x gens x param
-%                 best_per_gen_matx = zeros(number_of_runs ,MAXGEN,size(curr_param_vals,2) );
-%                 for i = 1:size(curr_param_vals,2)
-%                     LOCALLOOP = curr_param_vals(i);
-%                      [~ , ~, ~, best_per_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
-%                      best_per_gen_matx(:,:, i) = best_per_gen;
+                best_per_gen_matx = zeros(number_of_runs ,MAXGEN,size(curr_param_vals,2) );
+                for i = 1:size(curr_param_vals,2)
+                    REPLACE_WORST = curr_param_vals(i);
+                     [~ , ~, ~, best_per_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
+                     best_per_gen_matx(:,:, i) = best_per_gen;
 
                 end
             end
@@ -126,7 +133,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
     %Iterate for every parameter  (variate one parameter at a time)  
     figure
     
-    if(parameter == "LOCALLOOP")
+    if(parameter == "LOCALLOOP" || parameter ==  "REPLACE_WORST")
         save(filename, 'curr_param_vals', 'best_per_gen_matx');
         color = ['r', 'b'];
         
@@ -139,9 +146,16 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
             ylabel('Avg. Best solution per gen. across runs');        
 
         end
-        legend([p(1) p(2)],{'Local loop OFF','Local loop ON'});
-        title1 =  sprintf('Avg. results for %d independent runs.' ,number_of_runs);
-        title({'Local heuristic comparision (ON/OFF)';title1});
+        if(parameter == "LOCALLOOP")
+            legend([p(1) p(2)],{'Local loop OFF','Local loop ON'});
+            title1 =  sprintf('Avg. results for %d independent runs.' ,number_of_runs);
+            title({'Local heuristic comparision (ON/OFF)';title1});
+        else
+            %0 for elitism ; 1 for replace worst
+            legend([p(1) p(2)],{'Elitism','Replace worst'});
+            title1 =  sprintf('Avg. results for %d independent runs.' ,number_of_runs);
+            title({'Survivor selection strategy';title1});
+        end
         hold off      
         
     else

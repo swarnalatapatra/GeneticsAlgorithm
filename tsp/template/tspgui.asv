@@ -12,8 +12,14 @@ PR_MUT=.1;         % probability of mutation
 
 %--------------------------------------------
 LOCALLOOP=1;        % local loop removal
+<<<<<<< HEAD
 MAXGEN= 1500; %1000;	% Maximum no. of generations
 NIND=1000 ;%700; %400;            % Number of individuals
+=======
+MAXGEN= 1000;		% Maximum no. of generations
+NIND=400;            % Number of individuals
+>>>>>>> bf6f4fdaef45b55dccff84017e2c167347626b60
+
 
 %New parameters --------------------------------------------
 REPRESENTATION = 0; % 0: PATH  ; 1: ADJACENCY ; 
@@ -21,8 +27,14 @@ STOP_CRIT = 0; %Integer between 0-3 for our implementation ; 0 for non stopping 
 REPLACE_WORST = 0; %0 for elitism ; 1 for replace worst
 %MUTATION = 'inversion'; % default mutation operator, swapping
 MUTATION = 'insertion'; 
+<<<<<<< HEAD
 FILE_NUM = 1; %Default 2 = 16 cities. 8 = 51 cities. 1 = 380 cities. 13 = 131 cities.
 number_of_runs = 10 ; %5 or 10
+=======
+FILE_NUM = 8; %Default 2 = 16 cities. 8 = 51 cities. 1 = 380 cities. 13 = 131 cities.
+number_of_runs = 10 ; %3 or 10
+>>>>>>> bf6f4fdaef45b55dccff84017e2c167347626b60
+
 
 if(REPRESENTATION == 1)
    CROSSOVER = 'xalt_edges';  % default crossover operator For ADJACENCY Representation
@@ -88,7 +100,9 @@ crosssliderv = uicontrol(ph,'Style','text','String',round(PR_CROSS*100),'Positio
 elitslidertxt = uicontrol(ph,'Style','text','String','% elite','Position',[0 80 130 20]);
 elitslider = uicontrol(ph,'Style','slider','Max',100,'Min',0,'Value',round(ELITIST*100),'Sliderstep',[0.01 0.05],'Position',[130 80 150 20],'Callback',@elitslider_Callback);
 elitsliderv = uicontrol(ph,'Style','text','String',round(ELITIST*100),'Position',[280 80 50 20]);
-crossover = uicontrol(ph,'Style','popupmenu', 'String',{'xalt_edges'}, 'Value',1,'Position',[10 50 130 20],'Callback',@crossover_Callback);
+crossover = uicontrol(ph,'Style','popupmenu', 'String',{'xalt_edges', 'order_crossover'}, 'Value',1,'Position',[10 50 130 20],'Callback',@crossover_Callback);
+crossover = uicontrol(ph,'Style','popupmenu', 'String',{'xalt_edges', 'order_crossover'}, 'Value',1,'Position',[10 50 130 20],'Callback',@crossover_Callback);
+
 %inputbutton = uicontrol(ph,'Style','pushbutton','String','Input','Position',[55 10 70 30],'Callback',@inputbutton_Callback);
 runbutton = uicontrol(ph,'Style','pushbutton','String','START','Position',[0 10 50 30],'Callback',@runbutton_Callback);
 
@@ -171,7 +185,12 @@ set(fh,'Visible','on');
         set(mutslider,'Visible','off');
         set(crossslider,'Visible','off');
         set(elitslider,'Visible','off');
-        run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3);
+        
+        %Default method Run ga
+        %run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3);
+        %run_ga customized
+        run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
+
         end_run();
     end
     function inputbutton_Callback(hObject,eventdata)
@@ -196,13 +215,23 @@ set(fh,'Visible','on');
     %parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION,number_of_runs);
 
 % %-----------------------------------------------------------------------------------
-    %%stopping_criteria: (Question 3) and Alternative representation (Question 4)
+    %%stopping_criteria: (Question 3) 
+    
+    %stopp_crit_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
+
+    
+    % %-----------------------------------------------------------------------------------
+   % Alternative representation (Question 4)
     %%choose representation with REPRESENTATION variable
     
-    %run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
+   % run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
     % %-----------------------------------------------------------------------------------
     
     %Benchmark problems test (Question 6)
+<<<<<<< HEAD
     benchmark_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
+=======
+   % benchmark_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
+>>>>>>> bf6f4fdaef45b55dccff84017e2c167347626b60
 
 end
