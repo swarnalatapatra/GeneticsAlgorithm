@@ -12,7 +12,7 @@ PR_MUT=.1;         % probability of mutation
 
 %--------------------------------------------
 LOCALLOOP=1;        % local loop removal
-MAXGEN= 1000;		% Maximum no. of generations
+MAXGEN= 100;		% Maximum no. of generations
 NIND=400;            % Number of individuals
 
 
@@ -90,7 +90,10 @@ crosssliderv = uicontrol(ph,'Style','text','String',round(PR_CROSS*100),'Positio
 elitslidertxt = uicontrol(ph,'Style','text','String','% elite','Position',[0 80 130 20]);
 elitslider = uicontrol(ph,'Style','slider','Max',100,'Min',0,'Value',round(ELITIST*100),'Sliderstep',[0.01 0.05],'Position',[130 80 150 20],'Callback',@elitslider_Callback);
 elitsliderv = uicontrol(ph,'Style','text','String',round(ELITIST*100),'Position',[280 80 50 20]);
-crossover = uicontrol(ph,'Style','popupmenu', 'String',{'xalt_edges'}, 'Value',1,'Position',[10 50 130 20],'Callback',@crossover_Callback);
+crossover = uicontrol(ph,'Style','popupmenu', 'String',{'xalt_edges', 'order_crossover'}, 'Value',1,'Position',[10 50 130 20],'Callback',@crossover_Callback);
+rep = uicontrol(ph,'Style','popupmenu', 'String',{"ADJACENCY", "PATH"}, 'Value',1,'Position',[300 50 130 20],'Callback',@representation_Callback);
+mutation = uicontrol(ph,'Style','popupmenu', 'String',{'inversion', 'insertion'}, 'Value',1,'Position',[300 25 130 20],'Callback',@mutation_Callback);
+
 %inputbutton = uicontrol(ph,'Style','pushbutton','String','Input','Position',[55 10 70 30],'Callback',@inputbutton_Callback);
 runbutton = uicontrol(ph,'Style','pushbutton','String','START','Position',[0 10 50 30],'Callback',@runbutton_Callback);
 
@@ -166,6 +169,23 @@ set(fh,'Visible','on');
         CROSSOVER = crossovers(crossover_value);
         CROSSOVER = CROSSOVER{1};
     end
+    function mutation_Callback(hObject,eventdata)
+        mut_value = get(hObject,'Value');
+        muts = get(hObject,'String');
+        MUTATION = muts(mut_value);
+        MUTATION = MUTATION{1};
+    end
+    function representation_Callback(hObject,eventdata)
+        rep_value = get(hObject,'Value');
+        reps = get(hObject,'String');
+        selected_red = reps(rep_value);
+        
+        if(selected_red{1} == "ADJACENCY")
+           REPRESENTATION = 1 ;
+        else
+           REPRESENTATION = 0; % PATH representation  
+        end
+    end
     function runbutton_Callback(hObject,eventdata)
         %set(ncitiesslider, 'Visible','off');
         set(nindslider,'Visible','off');
@@ -173,7 +193,12 @@ set(fh,'Visible','on');
         set(mutslider,'Visible','off');
         set(crossslider,'Visible','off');
         set(elitslider,'Visible','off');
-        run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3);
+        
+        %Default method Run ga
+        %run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3);
+        %run_ga customized
+        run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
+
         end_run();
     end
     function inputbutton_Callback(hObject,eventdata)
@@ -200,7 +225,7 @@ set(fh,'Visible','on');
 % %-----------------------------------------------------------------------------------
     %%stopping_criteria: (Question 3) 
     
-    stopp_crit_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
+    %stopp_crit_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
 
     
     % %-----------------------------------------------------------------------------------
