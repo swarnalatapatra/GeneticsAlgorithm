@@ -1,11 +1,12 @@
 function tspgui()
+%% Go to the end of this file to find how to run the methods
 
 %Before running this file, for testing the parameter_variation, please
 %intall the 'Curve Fitting Toolbox'  used for visualization of the mean and variance among
 %independant runs.
 %https://nl.mathworks.com/products/curvefitting.html
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 NVAR=26;            % No. of variables % no. of cities is changed according to the file selected
 PRECI=1;            % Precision of variables
 ELITIST=0.1;       % percentage of the elite population
@@ -20,14 +21,11 @@ LOCALLOOP=1;        % local loop removal
 MAXGEN= 500; %1000;	% Maximum no. of generations
 NIND=400 ;%700; %400;            % Number of individuals
 
-%New parameters --------------------------------------------
-%STOP_CRIT deactivated in order to run the parameter variation, as we run
-%many independent runs, we need to have the same numeber of iterations for
-%each.
+%-----------------------------New parameters --------------------------------------------
 %For testing stopping Crit, activate here and comment the parameter
 %variation method at the end of this file. Or to see the performance of the comparition between criteons,
 %run stopp_crit_plot at the end of this file. 
-STOP_CRIT = 0; %Integer between 0-3 for our implementation ; 0 for non stopping crit; otherwise default
+STOP_CRIT = 4; %Integer between 0-3 for our implementation ; 0 for non stopping crit; otherwise default
 
 
 %This functions can be tested with the GUI when commented all the new
@@ -46,9 +44,8 @@ if(REPRESENTATION == 1)
 else
    CROSSOVER = 'order_crossover'; %order crossover for PATH representation  
 end
-
    
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % load the data sets
 datasetslist = dir('datasets/');datasetslist = dir('datasets/');
@@ -250,29 +247,48 @@ set(fh,'Visible','on');
 
 %% CALLING TO OUR METHODS - comment/uncomment to run different questions from the project guideline.
 
-%% Parameter variation plotting for analysis: 
+%% Parameter variation plotting for analysis: (Question 2,5,7) 
     
     %%General parameters for adjacency (Question 2), local heuristic LOCALLOOP ON/OFF:
     %%(Question 5), and  survivor selection strategy: REPLACE_WORST (Question 7)
-    %%inside this method, select which set of parameters to variate
     
+    %%inside parameter_variation method, select (uncomment) which set of
+    %%parameters to variate and few/more amount of steps
+    
+    %%STOP_CRIT deactivated in order to run the parameter variation, as we run
+    %%many independent runs, we need to have the same numeber of iterations for
+    %each.
+    
+    
+    %STOP_CRIT = 0;
     %parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION,number_of_runs);
 
 %%-----------------------------------------------------------------------------------
-%% Stopping_criteria: (Question 3) 
+%% Stopping_criteria:(Question 3) 
+    %seed enabled in this method for being able to compare results
+
+    %to RUN a single run wiht stopping criteria, just modify the STOP_CRIT
+    %variable at the beggining of this document. And use the button RUN
+    %from GUI
     
     %stopp_crit_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
 
     
 %%-----------------------------------------------------------------------------------
-   %% Alternative representation (Question 4)
+%% Alternative representation (Question 4)
     %%choose representation with REPRESENTATION variable
     
-   % run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
+    %This method is also called when pushing the RUN button from the GUI if
+    %all this sections are disabeled.
+   
+    
+   %run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
   
 %%-----------------------------------------------------------------------------------
-    
-    %Benchmark problems test (Question 6)
+%% Benchmark problems test (Question 6)
+    %Comment x,y normalization and uncomment x,y without normalization to
+    %compare results with benchmark solutions 
+
     %benchmark_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
 
 end

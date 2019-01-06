@@ -18,17 +18,14 @@ PR_MUT=.075;         % probability of mutation
 %MANUAL SETTING OF PARAMETES 
 %--------------------------------------------
 LOCALLOOP=1;        % local loop removal
-MAXGEN= 500; %1000;	% Maximum no. of generations
+MAXGEN= 100; %1000;	% Maximum no. of generations
 NIND=400 ;%700; %400;            % Number of individuals
 
 %-----------------------------New parameters --------------------------------------------
-%STOP_CRIT deactivated in order to run the parameter variation, as we run
-%many independent runs, we need to have the same numeber of iterations for
-%each.
 %For testing stopping Crit, activate here and comment the parameter
 %variation method at the end of this file. Or to see the performance of the comparition between criteons,
 %run stopp_crit_plot at the end of this file. 
-STOP_CRIT = 0; %Integer between 0-3 for our implementation ; 0 for non stopping crit; otherwise default
+STOP_CRIT = 4; %Integer between 0-3 for our implementation ; 0 for non stopping crit; otherwise default
 
 
 %This functions can be tested with the GUI when commented all the new
@@ -105,8 +102,8 @@ crosssliderv = uicontrol(ph,'Style','text','String',round(PR_CROSS*100),'Positio
 elitslidertxt = uicontrol(ph,'Style','text','String','% elite','Position',[0 80 130 20]);
 elitslider = uicontrol(ph,'Style','slider','Max',100,'Min',0,'Value',round(ELITIST*100),'Sliderstep',[0.01 0.05],'Position',[130 80 150 20],'Callback',@elitslider_Callback);
 elitsliderv = uicontrol(ph,'Style','text','String',round(ELITIST*100),'Position',[280 80 50 20]);
-crossover = uicontrol(ph,'Style','popupmenu', 'String',{'xalt_edges', 'order_crossover'}, 'Value',1,'Position',[10 50 130 20],'Callback',@crossover_Callback);
-rep = uicontrol(ph,'Style','popupmenu', 'String',{"ADJACENCY", "PATH"}, 'Value',1,'Position',[300 50 130 20],'Callback',@representation_Callback);
+crossover = uicontrol(ph,'Style','popupmenu', 'String',{'order_crossover', 'xalt_edges'}, 'Value',1,'Position',[10 50 130 20],'Callback',@crossover_Callback);
+rep = uicontrol(ph,'Style','popupmenu', 'String',{"PATH","ADJACENCY"}, 'Value',1,'Position',[300 50 130 20],'Callback',@representation_Callback);
 mutation = uicontrol(ph,'Style','popupmenu', 'String',{'inversion', 'insertion'}, 'Value',1,'Position',[300 25 130 20],'Callback',@mutation_Callback);
 surv = uicontrol(ph,'Style','popupmenu', 'String',{"Elitism", "Replace worst"}, 'Value',1,'Position',[150 50 130 20],'Callback',@surval_Callback);
 
@@ -258,6 +255,12 @@ set(fh,'Visible','on');
     %%inside parameter_variation method, select (uncomment) which set of
     %%parameters to variate and few/more amount of steps
     
+    %%STOP_CRIT deactivated in order to run the parameter variation, as we run
+    %%many independent runs, we need to have the same numeber of iterations for
+    %%each.
+    
+    
+    %STOP_CRIT = 0;
     %parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION,number_of_runs);
 
 %%-----------------------------------------------------------------------------------
