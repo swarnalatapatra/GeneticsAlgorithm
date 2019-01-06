@@ -11,9 +11,9 @@ PR_CROSS=.97;       % probability of crossover
 PR_MUT=.1;         % probability of mutation
 
 %--------------------------------------------
-LOCALLOOP=1;        % local loop removal
-MAXGEN= 1500; %1000;	% Maximum no. of generations
-NIND=1000 ;%700; %400;            % Number of individuals
+LOCALLOOP=0;        % local loop removal
+MAXGEN= 500; %1000;	% Maximum no. of generations
+NIND=400 ;%700; %400;            % Number of individuals
 
 %New parameters --------------------------------------------
 REPRESENTATION = 0; % 0: PATH  ; 1: ADJACENCY ; 
@@ -21,7 +21,7 @@ STOP_CRIT = 0; %Integer between 0-3 for our implementation ; 0 for non stopping 
 REPLACE_WORST = 0; %0 for elitism ; 1 for replace worst
 MUTATION = 'inversion'; % default mutation operator, swapping
 %MUTATION = 'insertion'; 
-FILE_NUM = 1; %Default 2 = 16 cities. 8 = 51 cities. 1 = 380 cities. 13 = 131 cities.
+FILE_NUM = 8; %Default 2 = 16 cities. 8 = 51 cities. 1 = 380 cities. 13 = 131 cities.
 number_of_runs = 5 ; %5 or 10
 
 
@@ -224,7 +224,7 @@ set(fh,'Visible','on');
 % %-----------------------------------------------------------------------------------
     %%stopping_criteria: (Question 3) 
     
-    %stopp_crit_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
+    stopp_crit_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
 
     
     % %-----------------------------------------------------------------------------------
@@ -235,6 +235,6 @@ set(fh,'Visible','on');
     % %-----------------------------------------------------------------------------------
     
     %Benchmark problems test (Question 6)
-    benchmark_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
+    %benchmark_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
 
 end
