@@ -85,7 +85,7 @@ methods
             case 3 %efficiency 
                 STOP = sc.efficiency_limit(curr_gen_maxFitness,gen);
             otherwise
-                warning('Unexpected stopping criterion type.')
+                %warning('Unexpected stopping criterion type.')
                 STOP = false ; 
         end
     end 
