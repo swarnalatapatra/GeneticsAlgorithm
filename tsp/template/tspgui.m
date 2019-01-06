@@ -4,26 +4,27 @@ function tspgui()
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 NVAR=26;            % No. of variables % no. of cities is changed according to the file selected
 PRECI=1;            % Precision of variables
-ELITIST=0.05;       % percentage of the elite population
+ELITIST=0.15;       % percentage of the elite population
 GGAP=1-ELITIST;		% Generation gap
 STOP_PERCENTAGE=.95;    % percentage of equal fitness individuals for stopping
 PR_CROSS=.95;       % probability of crossover
-PR_MUT=.05;         % probability of mutation
+PR_MUT=.1;         % probability of mutation
 
 
 %--------------------------------------------
 LOCALLOOP=0;        % local loop removal
-MAXGEN= 200;		% Maximum no. of generations
-NIND=200;            % Number of individuals
+MAXGEN= 100;		% Maximum no. of generations
+NIND=50;            % Number of individuals
 
 %New parameters --------------------------------------------
 REPRESENTATION = 0; % 0: PATH  ; 1: ADJACENCY ; 
-STOP_CRIT = 0;%1 ; %Integer between 0-3 ; 0 for non stopping crit
+STOP_CRIT = 0; %1 ; %Integer between 0-3 ; 0 for non stopping crit
 REPLACE_WORST = 0; %0 for elitism ; 1 for replace worst
 %MUTATION = 'inversion';% default mutation operator, swapping
 MUTATION = 'insertion'; 
 FILE_NUM = 2; %Default 2 = 16 cities. 8 = 51 cities. 1 = 380 cities. 13 = 131 cities.
 number_of_runs = 3 ; %3 or 10
+
 
 if(REPRESENTATION == 1)
    CROSSOVER = 'xalt_edges';  % default crossover operator For ADJACENCY Representation
@@ -43,10 +44,10 @@ end
 
 % Selection of the dataset : default, start with first dataset
 data = load(['datasets/' datasets{FILE_NUM}]); 
-x=data(:,1)/max([data(:,1);data(:,2)]);y=data(:,2)/max([data(:,1);data(:,2)]); %normalization
+%x=data(:,1)/max([data(:,1);data(:,2)]);y=data(:,2)/max([data(:,1);data(:,2)]); %normalization
 
 %For benchmark problem switched off scaling:
-%x = data(:,1) ; y = data(:,2);
+x = data(:,1) ; y = data(:,2);
 
 NVAR=size(data,1);
 
@@ -204,6 +205,6 @@ set(fh,'Visible','on');
     % %-----------------------------------------------------------------------------------
     
     %Benchmark problems test (Question 6)
-    %benchmark_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
+   % benchmark_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
 
 end
