@@ -2,11 +2,12 @@ classdef stopping_criteria
     
  properties
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-gen_comparision_percen = 0.5 ; % Maximal improvement of solution over last N generations (N = gen*gen_comparision_percen)
-min_improvement = 0.05 ;  % minimum percentage of improvement: 30% 
-min_diversity = 0.1; %minimum diversity limit below which the algorithm stops
+cost_limit =50;		% Total cost should not exceed this limit
+gen_comparision_percen = 0.3 ; % Maximal improvement of solution over last N generations (N = gen*gen_comparision_percen)
+min_improvement = 0.1 ;  % minimum percentage of improvement: 10% 
+min_diversity = 4%0.5 ; %minimum diversity limit below which the algorithm stops
 thr_gen = 50 ; %When to start checking for stopping criteria
-efficiency_lim = 0.0625 ; %efficiency should not be below this limit - To be defined : Desired min lengt? 100/(d*gen)
+efficiency_lim = 0.5 ; %efficiency should not be below this limit - To be defined : Desired min lengt? 100/(d*gen)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  end
   
