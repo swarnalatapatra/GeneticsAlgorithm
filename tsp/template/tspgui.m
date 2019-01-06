@@ -13,7 +13,7 @@ PR_MUT=.1;         % probability of mutation
 
 %--------------------------------------------
 LOCALLOOP=0;        % local loop removal
-MAXGEN= 3;		% Maximum no. of generations
+MAXGEN= 1000;		% Maximum no. of generations
 NIND=400;            % Number of individuals
 
 %New parameters --------------------------------------------
