@@ -3,7 +3,7 @@ function tspgui()
 
 %Before running this file, for testing the parameter_variation, please
 %intall the 'Curve Fitting Toolbox'  used for visualization of the mean and variance among
-%independant runs.
+%independant runs. 
 %https://nl.mathworks.com/products/curvefitting.html
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
