@@ -133,7 +133,7 @@ function [best_all_gen , best_gen_time, best_gen, best_per_gen] = run_ga_customi
          
                 %Template stopping criterion
                 if (sObjV(stopN)-sObjV(1) <= 1e-15)
-                    print('Stoped by Template stopping criterion')
+                    disp('Stoped by Template stopping criterion');
                     break;  
                 end  
                 

@@ -13,9 +13,9 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
     %(Question 2) and (Question 4)
     %parameters = ["NIND", "MAXGEN", "ELITIST", "PROB.CROSS", "PROB.MUT"];
     %(Question 5)
-    %parameters = ["LOCALLOOP"];
+    parameters = ["LOCALLOOP"];
     %(Question 7)
-    parameters = ["REPLACE_WORST"];
+    %parameters = ["REPLACE_WORST"];
     
     ranges = containers.Map;
     

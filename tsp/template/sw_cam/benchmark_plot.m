@@ -14,7 +14,7 @@ title1 =  sprintf('Benchmark problems with %d cities.' ,NVAR);
 title2 = sprintf('Avg. results for %d independent runs.' ,number_of_runs);
 title({title1;title2});
 
-avg_best_sol = min(mean(best_per_gen_matx));
+avg_best_sol = min(mean(best_per_gen));
 
 disp('avg_best_sol: ')
 disp(avg_best_sol)
