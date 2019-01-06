@@ -12,7 +12,7 @@ PR_MUT=.05;         % probability of mutation
 
 
 %--------------------------------------------
-LOCALLOOP=0;        % local loop removal
+LOCALLOOP=1;        % local loop removal
 MAXGEN= 200;		% Maximum no. of generations
 NIND=200;            % Number of individuals
 
@@ -22,7 +22,8 @@ STOP_CRIT = 0;%1 ; %Integer between 0-3 ; 0 for non stopping crit
 REPLACE_WORST = 0; %0 for elitism ; 1 for replace worst
 %MUTATION = 'inversion';% default mutation operator, swapping
 MUTATION = 'insertion'; 
-FILE_NUM = 7; %Default 1 = 16 cities. 7 = 51 cities
+FILE_NUM = 13; %Default 2 = 16 cities. 8 = 51 cities. 1 = 380 cities. 13 = 131 cities.
+number_of_runs = 3 ; %3 or 10
 
 if(REPRESENTATION == 1)
    CROSSOVER = 'xalt_edges';  % default crossover operator For ADJACENCY Representation
@@ -41,11 +42,11 @@ for i=1:size(datasets,1);
 end
 
 % Selection of the dataset : default, start with first dataset
-data = load(['datasets/' datasets{FILE_NUM}]);
-x=data(:,1)/max([data(:,1);data(:,2)]);y=data(:,2)/max([data(:,1);data(:,2)]); %normalization
+data = load(['datasets/' datasets{FILE_NUM}]); 
+%x=data(:,1)/max([data(:,1);data(:,2)]);y=data(:,2)/max([data(:,1);data(:,2)]); %normalization
 
 %For benchmark problem switched off scaling:
-%x = data(:,1) ; y = data(:,2);
+x = data(:,1) ; y = data(:,2);
 
 NVAR=size(data,1);
 
@@ -101,7 +102,7 @@ set(fh,'Visible','on');
         % load the dataset
         data = load(['datasets/' dataset]);
         x=data(:,1)/max([data(:,1);data(:,2)]);y=data(:,2)/max([data(:,1);data(:,2)]);
-        %x=data(:,1);y=data(:,2);
+        %x=data(:,1);y=data(:,2); %remove scaling for benchmark problem
         NVAR=size(data,1); 
         set(ncitiessliderv,'String',size(data,1));
         axes(ah1);
@@ -191,7 +192,7 @@ set(fh,'Visible','on');
 %-----------------------------------------------------------------------------------
     %%Parameter variation: (Question 2) (For ADJACENCY Representation)
     
-    parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
+    %parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION,number_of_runs);
 
 % %-----------------------------------------------------------------------------------
     %%stopping_criteria: (Question 3) and Alternative representation (Question 4)
@@ -199,5 +200,9 @@ set(fh,'Visible','on');
     
     %run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
     % %-----------------------------------------------------------------------------------
+    
+    %Benchmark problems test
+    
+    %benchmark_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
 
 end

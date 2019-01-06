@@ -1,6 +1,6 @@
 
 
-function stdshade(amatrix,alpha,acolor,F,smth)
+function p = stdshade(amatrix,alpha,acolor,F,smth)
 % usage: stdshading(amatrix,alpha,acolor,F,smth)
 % plot mean and sem/std coming from a matrix of data, at which each row is an
 % observation. sem/std is shown as shading.
@@ -40,7 +40,9 @@ if ishold==0
     check=true; else check=false;
 end
 
-hold on;plot(F,amean,acolor,'linewidth',1.5); %% change color or linewidth to adjust mean line
+hold on;
+
+p = plot(F,amean,acolor,'linewidth',1.5); %% change color or linewidth to adjust mean line
 
 if check
     hold off;
