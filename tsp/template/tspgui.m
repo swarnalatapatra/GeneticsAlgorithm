@@ -22,7 +22,7 @@ STOP_CRIT = 0;%1 ; %Integer between 0-3 ; 0 for non stopping crit
 REPLACE_WORST = 0; %0 for elitism ; 1 for replace worst
 %MUTATION = 'inversion';% default mutation operator, swapping
 MUTATION = 'insertion'; 
-FILE_NUM = 13; %Default 2 = 16 cities. 8 = 51 cities. 1 = 380 cities. 13 = 131 cities.
+FILE_NUM = 2; %Default 2 = 16 cities. 8 = 51 cities. 1 = 380 cities. 13 = 131 cities.
 number_of_runs = 3 ; %3 or 10
 
 if(REPRESENTATION == 1)
@@ -194,7 +194,7 @@ set(fh,'Visible','on');
     %%General parameters for adjacency (Question 2), local heuristic LOCALLOOP ON/OFF:
     %%(Question 5), and  survivor selection strategy: REPLACE_WORST (Question 7)
     
-    %parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION,number_of_runs);
+    parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION,number_of_runs);
 
 % %-----------------------------------------------------------------------------------
     %%stopping_criteria: (Question 3) and Alternative representation (Question 4)
