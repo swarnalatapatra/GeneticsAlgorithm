@@ -1,4 +1,5 @@
 function tspgui()
+%% Go to the end of this file to find how to run the methods
 
 %Before running this file, for testing the parameter_variation, please
 %intall the 'Curve Fitting Toolbox'  used for visualization of the mean and variance among
@@ -261,6 +262,11 @@ set(fh,'Visible','on');
 
 %%-----------------------------------------------------------------------------------
 %% Stopping_criteria:(Question 3) 
+    %seed enabled in this method for being able to compare results
+
+    %to RUN a single run wiht stopping criteria, just modify the STOP_CRIT
+    %variable at the beggining of this document. And use the button RUN
+    %from GUI
     
     %stopp_crit_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
 
@@ -268,6 +274,10 @@ set(fh,'Visible','on');
 %%-----------------------------------------------------------------------------------
 %% Alternative representation (Question 4)
     %%choose representation with REPRESENTATION variable
+    
+    %This method is also called when pushing the RUN button from the GUI if
+    %all this sections are disabeled.
+   
     
    %run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
   
