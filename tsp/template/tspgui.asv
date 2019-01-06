@@ -5,7 +5,7 @@ function tspgui()
 %independant runs.
 %https://nl.mathworks.com/products/curvefitting.html
 
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 NVAR=26;            % No. of variables % no. of cities is changed according to the file selected
 PRECI=1;            % Precision of variables
 ELITIST=0.1;       % percentage of the elite population
@@ -20,7 +20,7 @@ LOCALLOOP=1;        % local loop removal
 MAXGEN= 500; %1000;	% Maximum no. of generations
 NIND=400 ;%700; %400;            % Number of individuals
 
-%-----------------------------New parameters --------------------------------------------
+%New parameters --------------------------------------------
 %STOP_CRIT deactivated in order to run the parameter variation, as we run
 %many independent runs, we need to have the same numeber of iterations for
 %each.
@@ -46,8 +46,9 @@ if(REPRESENTATION == 1)
 else
    CROSSOVER = 'order_crossover'; %order crossover for PATH representation  
 end
+
    
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % load the data sets
 datasetslist = dir('datasets/');datasetslist = dir('datasets/');
@@ -249,33 +250,29 @@ set(fh,'Visible','on');
 
 %% CALLING TO OUR METHODS - comment/uncomment to run different questions from the project guideline.
 
-%% Parameter variation plotting for analysis: (Question 2,5,7) 
+%% Parameter variation plotting for analysis: 
     
     %%General parameters for adjacency (Question 2), local heuristic LOCALLOOP ON/OFF:
     %%(Question 5), and  survivor selection strategy: REPLACE_WORST (Question 7)
-    
-    %%inside parameter_variation method, select (uncomment) which set of
-    %%parameters to variate and few/more amount of steps
+    %%inside this method, select which set of parameters to variate
     
     %parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION,number_of_runs);
 
 %%-----------------------------------------------------------------------------------
-%% Stopping_criteria:(Question 3) 
+%% Stopping_criteria: (Question 3) 
     
     %stopp_crit_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
 
     
 %%-----------------------------------------------------------------------------------
-%% Alternative representation (Question 4)
+   %% Alternative representation (Question 4)
     %%choose representation with REPRESENTATION variable
     
-   %run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
+   % run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
   
 %%-----------------------------------------------------------------------------------
-%% Benchmark problems test (Question 6)
-    %Comment x,y normalization and uncomment x,y without normalization to
-    %compare results with benchmark solutions 
-
+    
+    %Benchmark problems test (Question 6)
     %benchmark_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
 
 end
