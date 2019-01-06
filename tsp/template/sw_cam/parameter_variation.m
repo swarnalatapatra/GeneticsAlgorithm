@@ -6,9 +6,11 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
 
     
     %parameters to variate
-     parameters = ["LOCALLOOP"];
+     
 
-  %  parameters = ["NIND", "MAXGEN", "ELITIST", "PROB.CROSS", "PROB.MUT", "LOCALLOOP"];
+  %  parameters = ["NIND", "MAXGEN", "ELITIST", "PROB.CROSS", "PROB.MUT"];
+    %parameters = ["LOCALLOOP"];
+    parameters = ["REPLACE_WORST"];
     ranges = containers.Map;
     
     
@@ -29,7 +31,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
         ranges("PROB.CROSS") = 0:0.05:1; %20 points
         ranges("PROB.MUT") =  0:0.05:1; %20 points
         ranges("LOCALLOOP") =  0:1; %1:ON and 0: OFF
-    
+        ranges("REPLACE_WORST") =  0:1; %0 for elitism ; 1 for replace worst
     
     for j = 1:size(parameters,2)%parameter = parameters
        parameter = parameters(j);
@@ -102,8 +104,20 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
 
                 end
             end
+        case "REPLACE_WORST"
+            if(REPRESENTATION == 0) 
+                %For local heuristic
+                %Matrix: indep_runs x gens x param
+%                 best_per_gen_matx = zeros(number_of_runs ,MAXGEN,size(curr_param_vals,2) );
+%                 for i = 1:size(curr_param_vals,2)
+%                     LOCALLOOP = curr_param_vals(i);
+%                      [~ , ~, ~, best_per_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
+%                      best_per_gen_matx(:,:, i) = best_per_gen;
 
-    end 
+                end
+            end
+
+    end  %end switch
         
    
     

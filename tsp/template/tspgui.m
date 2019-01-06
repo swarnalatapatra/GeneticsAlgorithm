@@ -12,7 +12,7 @@ PR_MUT=.05;         % probability of mutation
 
 
 %--------------------------------------------
-LOCALLOOP=1;        % local loop removal
+LOCALLOOP=0;        % local loop removal
 MAXGEN= 200;		% Maximum no. of generations
 NIND=200;            % Number of individuals
 
@@ -43,10 +43,10 @@ end
 
 % Selection of the dataset : default, start with first dataset
 data = load(['datasets/' datasets{FILE_NUM}]); 
-%x=data(:,1)/max([data(:,1);data(:,2)]);y=data(:,2)/max([data(:,1);data(:,2)]); %normalization
+x=data(:,1)/max([data(:,1);data(:,2)]);y=data(:,2)/max([data(:,1);data(:,2)]); %normalization
 
 %For benchmark problem switched off scaling:
-x = data(:,1) ; y = data(:,2);
+%x = data(:,1) ; y = data(:,2);
 
 NVAR=size(data,1);
 
@@ -190,7 +190,9 @@ set(fh,'Visible','on');
     end
 
 %-----------------------------------------------------------------------------------
-    %%Parameter variation: (Question 2) (For ADJACENCY Representation)
+    %%Parameter variation plotting for analysis: 
+    %%General parameters for adjacency (Question 2), local heuristic LOCALLOOP ON/OFF:
+    %%(Question 5), and  survivor selection strategy: REPLACE_WORST (Question 7)
     
     %parameter_variation(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION,number_of_runs);
 
@@ -201,8 +203,7 @@ set(fh,'Visible','on');
     %run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,STOP_CRIT,REPLACE_WORST,REPRESENTATION);
     % %-----------------------------------------------------------------------------------
     
-    %Benchmark problems test
-    
+    %Benchmark problems test (Question 6)
     %benchmark_plot(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
 
 end

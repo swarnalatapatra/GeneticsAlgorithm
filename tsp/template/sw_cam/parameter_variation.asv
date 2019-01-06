@@ -2,19 +2,20 @@
 % Setting all parameters as a constant and varying one parameter at the time,
 % disabling stopping criterions, so we can analyse all experiments under the same conditions
 
-function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, STOP_PERCENTAGE, DEF_PR_CROSS, DEF_PR_MUT, MUTATION,CROSSOVER, DEF_LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT,REPLACE_WORST,REPRESENTATION);
+function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, STOP_PERCENTAGE, DEF_PR_CROSS, DEF_PR_MUT, MUTATION,CROSSOVER, DEF_LOCALLOOP, ah1, ah2, ah3 , STOP_CRIT,REPLACE_WORST,REPRESENTATION,number_of_runs);
 
     
     %parameters to variate
-     parameters = ["LOCALLOOP"];
+     
 
-  %  parameters = ["NIND", "MAXGEN", "ELITIST", "PROB.CROSS", "PROB.MUT", "LOCALLOOP"];
+  %  parameters = ["NIND", "MAXGEN", "ELITIST", "PROB.CROSS", "PROB.MUT"];
+    %parameters = ["LOCALLOOP"];
+    parameters = ["REPLACE_WORST"];
     ranges = containers.Map;
     
     
         %range definition for the parameters
         %range with lower iterrations
-%         number_of_runs = 3 ; %ideal 10
 %         ranges("NIND") = 10:300:1000 ;%3 points 
 %         ranges("MAXGEN") = 10:300:1000 ;%3 points
 %         ranges("ELITIST") = 0:0.2:1; %5 points
@@ -24,13 +25,13 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
 
     
         %range with higher iterations
-        number_of_runs = 10;
         ranges("NIND") = 10:33:1000; %30 points 
         ranges("MAXGEN") = 10:33:1000; %30 points
         ranges("ELITIST") = 0:0.05:1; %20 points
         ranges("PROB.CROSS") = 0:0.05:1; %20 points
         ranges("PROB.MUT") =  0:0.05:1; %20 points
         ranges("LOCALLOOP") =  0:1; %1:ON and 0: OFF
+        REPLACE_WORST
     
     
     for j = 1:size(parameters,2)%parameter = parameters
@@ -95,6 +96,19 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
         case "LOCALLOOP"
             if(REPRESENTATION == 0) %only works for path representation (errors in adj crossover)
                 %For local heuristic
+                %Matrix: indep_runs x gens x param
+                best_per_gen_matx = zeros(number_of_runs ,MAXGEN,size(curr_param_vals,2) );
+                for i = 1:size(curr_param_vals,2)
+                    LOCALLOOP = curr_param_vals(i);
+                     [~ , ~, ~, best_per_gen] = run_experiment(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, STOP_CRIT,REPLACE_WORST,REPRESENTATION, number_of_runs);
+                     best_per_gen_matx(:,:, i) = best_per_gen;
+
+                end
+            end
+        case "REPLACE_WORST"
+            if(REPRESENTATION == 0) %only works for path representation (errors in adj crossover)
+                %For local heuristic
+                %Matrix: indep_runs x gens x param
                 best_per_gen_matx = zeros(number_of_runs ,MAXGEN,size(curr_param_vals,2) );
                 for i = 1:size(curr_param_vals,2)
                     LOCALLOOP = curr_param_vals(i);
@@ -104,7 +118,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
                 end
             end
 
-    end 
+    end  %end switch
         
    
     
@@ -127,8 +141,8 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
 
         end
         legend([p(1) p(2)],{'Local loop OFF','Local loop ON'});
-        title =  sprintf('Avg. results for %d independant runs.' ,number_of_runs);
-        title({'Local heuristic comparision (ON/OFF)',title})
+        title1 =  sprintf('Avg. results for %d independent runs.' ,number_of_runs);
+        title({'Local heuristic comparision (ON/OFF)';title1});
         hold off      
         
     else
