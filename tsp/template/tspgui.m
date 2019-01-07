@@ -1,5 +1,5 @@
 function tspgui()
-%% Go to the end of this file to find how to run the methods
+%% Go to the end of this file to find how to run the alternative methods
 
 %Before running this file, for testing the parameter_variation, please
 %intall the 'Curve Fitting Toolbox'  used for visualization of the mean and variance among
