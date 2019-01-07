@@ -6,7 +6,7 @@ function Fitness = fitness_funct(ObjV);
     Fitness = constant_fitness./(ObjV);
 
 
-	end
+end
 
 
 % End of function

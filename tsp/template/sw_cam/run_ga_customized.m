@@ -1,9 +1,6 @@
 function [best_all_gen , best_gen_time, best_gen, best_per_gen] = run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit,replace_worst, REPRESENTATION)
-% usage: run_ga(x, y, 
-%               NIND, MAXGEN, NVAR, 
-%               ELITIST, STOP_PERCENTAGE, 
-%               PR_CROSS, PR_MUT, CROSSOVER, 
-%               ah1, ah2, ah3)
+% usage: run_ga_customized(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, 
+%MUTATION, CROSSOVER, LOCALLOOP, ah1, ah2, ah3,stop_crit,replace_worst, REPRESENTATION)
 %
 %
 % x, y: coordinates of the cities
@@ -16,6 +13,7 @@ function [best_all_gen , best_gen_time, best_gen, best_per_gen] = run_ga_customi
 % CROSSOVER: the crossover operator
 % calculate distance matrix between each pair of cities
 % ah1, ah2, ah3: axes handles to visualise tsp
+%
 {NIND MAXGEN NVAR ELITIST STOP_PERCENTAGE PR_CROSS PR_MUT CROSSOVER LOCALLOOP}
 
         %seed

@@ -32,8 +32,7 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
     ranges("PROB.MUT") = 0:0.2:1; %5 points
     ranges("LOCALLOOP") =  0:1; %1:ON and 0: OFF
 
-
-    %ranges for higher amount of steps
+%   %ranges for higher amount of steps
 %         ranges("NIND") = 10:33:1000; %30 points 
 %         ranges("MAXGEN") = 10:33:1000; %30 points
 %         ranges("ELITIST") = 0:0.05:1; %20 points
@@ -167,7 +166,6 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
         save(filename, 'curr_param_vals', 'dist_param' , 'time_min_dist', 'gen_min_dist');
     
         subplot(1,2,1);
-        %plot(curr_param_vals ,dist_param,'r-');
         stdshade(dist_param,0.1,'r',curr_param_vals);
         grid on
         xlabel(parameter);
@@ -175,18 +173,12 @@ function parameter_variation(x, y, DEF_NIND, DEF_MAXGEN, DEF_NVAR, DEF_ELITIST, 
 
 
         subplot(1,2,2);
-        %plot(curr_param_vals ,gen_min_dist,'b-');
         stdshade(gen_min_dist,0.1,'b',curr_param_vals);
         grid on
         xlabel(parameter);
         ylabel('Avg generations to get best sol. (s)');    
     end
-    
-%     if (j == 2)
-%         
-%         break;
-%     end
-%     
+  
     end
         
 end %End of function
